@@ -3,32 +3,75 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Yuer Tang</title>
+    <title>Yuer Tang - Goal Inference Project</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <style>
+      blockquote {
+        margin-left: 0;
+        font-style: italic;
+        font-size: 1.1em;
+        color: #555;
+        border-left: 5px solid #ccc;
+        padding-left: 15px;
+      }
+      .image-gallery img {
+        display: inline-block;
+        width: 45%;
+        margin-right: 5%;
+        vertical-align: middle;
+      }
+      .image-gallery img:last-child {
+        margin-right: 0;
+      }
+      p {
+        clear: both;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="index.html" target="_blank">Research</a></h1>
+        <h1><a href="index.html" target="_blank">Internships & Research</a></h1>
         <div class="nav-list">
           <a href="index.html" class="nav-link">Home Page</a>
+          <a href="projects.html" class="nav-link">Projects</a>
         </div>
       </header>
-      <section>
-        <h1>Interships & Research</h1>
-        <p>...</p>
 
+      <section>
+        <h2>Goal Inference in a Grid World Environment</h2>
+        <p>This project aims to model and infer a player's goal within a grid-based environment using <strong>Bayesian inference</strong> and <strong>value iteration</strong>. The core idea is to understand how an agent can predict the goal of another agent based on observed actions and state transitions, utilizing principles from reinforcement learning.</p>
+
+        <p>The project consists of two main components:</p>
+
+
+        <h3>Goal Inference Map (GIM)</h3>
+        <ul>
+          <li>For each potential goal in the environment, a <strong>policy</strong> is generated using <strong>value iteration</strong> to estimate the optimal actions the agent should take to reach the goal.</li>
+          <li>This policy helps compute the likelihood of observed actions, indicating how probable it is for the agent to be pursuing a specific goal based on its behavior.</li>
+        </ul>
+
+        <h3>Posterior Update Mechanism</h3>
+        <p>Given observed actions, a Bayesian posterior distribution is updated over possible goals. This process helps refine the prediction of which goal the agent is likely aiming for. The <strong>posterior</strong> is updated by comparing the observed action to the predicted optimal actions (from the GIM) for each goal, adjusting the likelihoods based on a decay factor.</p>
+
+        <p>The environment is represented by a grid with predefined obstacles (blocks) and potential goals. Using this framework, the model can predict and update the probability distribution of the agent’s goal as it navigates the environment.</p>
+
+        <div class="image-gallery">
+          <img src="path_to_goal_inference_diagram.jpg" alt="Goal Inference Diagram">
+          <img src="path_to_gim_diagram1.jpg" alt="Goal Inference Map">
+          <img src="path_to_gim_diagram2.jpg" alt="Posterior Update Mechanism">
+        </div>
       </section>
+
       <footer>
-        <p></p>
         <p>© 2024 Yuer Tang. All rights reserved.</p>
       </footer>
     </div>
+
     <script src="javascripts/scale.fix.js"></script>
   </body>
 </html>
