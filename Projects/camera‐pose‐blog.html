@@ -164,7 +164,7 @@
   <!-- Section 4: High-Level Model Overview -->
   <section id="model-overview">
     <h2>High-Level Model Overview</h2>
-    <p>Below is a simplified block diagram of our ResNet50 + CBAM pose estimator (full code available on GitHub <a href="https://github.com/yuertang/resnet-cbam-pose" target="_blank">here</a>):</p>
+    <p>Below is a simplified block diagram of our ResNet50 + CBAM pose estimator (full code available on GitHub <a href="https://github.com/YuerTang/Math-156-Project" target="_blank">here</a>):</p>
     <img src="images/model-block-diagram.png" alt="Block diagram of ResNet50+CBAM with two pose heads." />
     <p class="caption">Figure 3: ResNet50 backbone with CBAM after each stage, leading into two separate pose‐regression heads.</p>
 
@@ -198,8 +198,7 @@
       <li><strong>Dynamic elements:</strong> Pedestrians, bicycles, and cars occasionally enter the scene.</li>
       <li><strong>Repetitive architecture:</strong> Stone walls and archways that look very similar from different viewpoints, making it easy to confuse locations.</li>
     </ul>
-    <img src="images/kings-college-sample.jpg" alt="Sample image from King’s College dataset with ground-truth camera axes overlaid." />
-    <p class="caption">Figure 4: A sample King’s College frame with ground-truth camera axes (red = X, green = Y, blue = Z).</p>
+    
     <p>We followed the standard train/test split provided on the dataset page: 70 % of the frames for training and 30 % for validation. No frames overlapped between the two splits, so we avoided any data leakage.</p>
   </section>
 
@@ -277,51 +276,30 @@
 
   <!-- Section 7: Results & Visualizations -->
   <section id="results">
-    <h2>Results & Visualizations</h2>
-
-    <h3>Loss Curves</h3>
-    <img src="images/loss-curves.png" alt="Training and validation loss curves for ResNet50, ResNet50+CBAM, and VGG16-PoseNet." />
-    <p class="caption">Figure 5: Translation & rotation loss vs. epochs (log scale). ResNet50+CBAM converges fastest with the smallest train/validation gap.</p>
-
-    <h3>Quantitative Metrics</h3>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Model</th>
-            <th>Median Translation Error (m)</th>
-            <th>Median Rotation Error (°)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>VGG16-PoseNet</td>
-            <td>7.2</td>
-            <td>4.5</td>
-          </tr>
-          <tr>
-            <td>ResNet50-PoseNet</td>
-            <td>4.8</td>
-            <td>3.2</td>
-          </tr>
-          <tr>
-            <td><strong>ResNet50 + CBAM</strong></td>
-            <td><strong>3.6</strong></td>
-            <td><strong>2.1</strong></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>As shown above, adding CBAM onto ResNet50 reduced median translation error by ≈ 25 % and rotation error by ≈ 35 % compared to ResNet50 alone. Against the original VGG16-PoseNet, our best model reduced translation error by ≈ 50 %.</p>
-
-    <h3>Qualitative Example</h3>
-    <img src="images/qualitative-comparison.png" alt="Side-by-side ground truth vs. predicted camera trajectory overlayed on a map." />
-    <p class="caption">Figure 6: Ground-truth trajectory (blue) vs. ResNet50+CBAM predictions (orange) overlaid on King’s College quad map. Notice how the CBAM model stays closer to the true path under changing lighting.</p>
-
-    <h3>Predicted Axes Comparison</h3>
-    <img src="images/axis-comparison-frames.png" alt="Side-by-side images showing ground-truth camera axes (left) vs. predicted axes by ResNet50+CBAM (right)." />
-    <p class="caption">Figure 7: Example frame. Left: ground-truth axes (red = X, green = Y, blue = Z). Right: predicted axes by ResNet50+CBAM. The orientation matches closely even when shadows shift.</p>
+    <h2>Loss Curves: What We Learned</h2>
+  
+    <p>We trained three architectures—VGG16-PoseNet, ResNet50-PoseNet, and our enhanced ResNet50+CBAM model—under two loss regimes: a learnable β loss and a static β (fixed-weight) loss. Below are the results, visualized under both <strong>linear</strong> and <strong>logarithmic</strong> scales.</p>
+  
+    <h3>(a) Learned Loss — Linear Scale</h3>
+    <img src="images/learned_loss_cbam.png" alt="Learned β loss curve under linear scale">
+    <p class="caption">CBAM (purple) not only converges fastest, but shows tight alignment between training and validation loss.</p>
+  
+    <h3>(b) Learned Loss — Log Scale</h3>
+    <img src="images/learned_loss_log.png" alt="Learned β loss curve under log scale">
+    <p class="caption">In log scale, ResNetCBAM decays nearly exponentially, while ResNet50 and VGG16 flatten out sooner or diverge slightly.</p>
+  
+    <h3>(c) Static Loss — Linear Scale</h3>
+    <img src="images/static_loss_cbam.png" alt="Static β loss curve under linear scale">
+    <p class="caption">Without a learned balance factor, all models struggle to reduce loss as effectively. Validation loss remains noticeably higher.</p>
+  
+    <h3>(d) Static Loss — Log Scale</h3>
+    <img src="images/static_loss_log.png" alt="Static β loss curve under log scale">
+    <p class="caption">Validation loss becomes noisy and plateaus earlier, especially for ResNet50 without CBAM (orange).</p>
+  
+    <h3>Takeaway</h3>
+    <p>Across all views, ResNet50+CBAM achieves the <strong>fastest convergence</strong>, <strong>lowest final loss</strong>, and the <strong>tightest generalization gap</strong>. This suggests that CBAM helps the model focus on pose-relevant visual cues, while the <em>learned-β loss</em> dynamically tunes the weight between translation and rotation errors—resulting in better stability and lower overfitting. We saw especially strong gains in the early training phase, where CBAM pushes the model into the “low-loss” zone earlier than any baseline.</p>
   </section>
+  
 
   <!-- Section 8: Why CBAM Helps (Intuition + Evidence) -->
   <section id="why-cbam-helps">
