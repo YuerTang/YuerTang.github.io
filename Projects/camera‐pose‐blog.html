@@ -116,7 +116,7 @@
   <section id="opening-hook">
     <h2>Opening Hook</h2>
     <p><strong>Ever tried to take a photo on a foggy evening, only to see your phone’s AR compass spin wildly? Or watched a drone fly down a canyon and lose its GPS signal? Camera‐pose estimation—teaching a neural network to infer “Where am I?” from a single image—solves exactly that.</strong> In this post, we’ll show how we took Google’s PoseNet concept and made it sharper, faster, and more robust by swapping in a ResNet backbone plus a lightweight attention module called CBAM. Along the way, you’ll see how a little “focus” (both spatially and channel-wise) lets a network zoom in on the right pixels—and avoid getting fooled by passing crowds or shifting shadows.</p>
-    <img src="images/hook-drone.jpg" alt="Drone navigating narrow canyon without GPS." />
+    <img src="Projects/Images/drone_canyon.jpg" alt="Drone navigating narrow canyon without GPS." />
     <p class="caption">Figure 1: A drone losing GPS in a narrow canyon.</p>
   </section>
 
@@ -165,8 +165,6 @@
   <section id="model-overview">
     <h2>High-Level Model Overview</h2>
     <p>Below is a simplified block diagram of our ResNet50 + CBAM pose estimator (full code available on GitHub <a href="https://github.com/YuerTang/Math-156-Project" target="_blank">here</a>):</p>
-    <img src="images/model-block-diagram.png" alt="Block diagram of ResNet50+CBAM with two pose heads." />
-    <p class="caption">Figure 3: ResNet50 backbone with CBAM after each stage, leading into two separate pose‐regression heads.</p>
 
     <h3>Key Points</h3>
     <ul>
