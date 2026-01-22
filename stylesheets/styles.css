@@ -194,8 +194,8 @@ strong {
 }
 
 .hero-image img {
-  width: 200px;
-  height: 200px;
+  width: 280px;
+  height: 280px;
   border-radius: var(--radius-lg);
   object-fit: cover;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -636,8 +636,8 @@ strong {
   }
 
   .hero-image img {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
   }
 
   .hero-title {
