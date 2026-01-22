@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LightCBAM-ResNet: A Lightweight Attention-Enhanced Backbone for Camera Pose Estimation - Yuer Tang">
+  <meta name="author" content="Yuer Tang">
+
+  <title>Camera Pose Estimation - Yuer Tang</title>
+
+  <link rel="stylesheet" href="../stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* Blog-specific styles */
+    .blog-content {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .blog-header {
+      text-align: center;
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .blog-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: var(--spacing-sm);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+    }
+
+    .blog-meta {
+      color: var(--color-text-secondary);
+      font-size: 1rem;
+    }
+
+    .blog-content h2 {
+      font-size: 1.75rem;
+      margin-top: var(--spacing-2xl);
+      margin-bottom: var(--spacing-md);
+      padding-bottom: var(--spacing-xs);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .blog-content h3 {
+      font-size: 1.25rem;
+      margin-top: var(--spacing-lg);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .blog-content p {
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .blog-content ul, .blog-content ol {
+      margin-bottom: var(--spacing-md);
+      padding-left: var(--spacing-lg);
+    }
+
+    .blog-content li {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .blog-content img {
+      max-width: 100%;
+      height: auto;
+      margin: var(--spacing-lg) 0;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .caption {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      text-align: center;
+      margin-top: calc(var(--spacing-md) * -1);
+      margin-bottom: var(--spacing-lg);
+      font-style: italic;
+    }
+
+    .blog-content pre {
+      background: #1d1d1f;
+      color: #f5f5f7;
+      padding: var(--spacing-md);
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin-bottom: var(--spacing-md);
+      font-size: 0.875rem;
+    }
+
+    .blog-content code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+    }
+
+    .blog-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: var(--spacing-lg);
+      font-size: 0.875rem;
+    }
+
+    .blog-content th, .blog-content td {
+      border: 1px solid var(--color-border-light);
+      padding: var(--spacing-sm);
+      text-align: left;
+    }
+
+    .blog-content th {
+      background: var(--color-bg-secondary);
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    .blog-content td {
+      color: var(--color-text-secondary);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      margin-bottom: var(--spacing-lg);
+      font-size: 0.9375rem;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">Yuer Tang</a>
+      <div class="nav-links">
+        <a href="../research.html" class="nav-link">Research</a>
+        <a href="../publications.html" class="nav-link">Publications</a>
+        <a href="../cv.pdf" class="nav-link" target="_blank">CV</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <div class="blog-content">
+
+        <a href="../research.html" class="back-link">
+          <i class="fas fa-arrow-left"></i> Back to Research
+        </a>
+
+        <header class="blog-header">
+          <h1 class="blog-title">LightCBAM-ResNet: A Lightweight Attention-Enhanced Backbone for Camera Pose Estimation</h1>
+          <p class="blog-meta">Yuer Tang · June 2025 · MATH 156 Final Project</p>
+        </header>
+
+        <!-- Section 1: Opening Hook -->
+        <section>
+          <h2>Opening Hook</h2>
+          <p><strong>Ever tried to take a photo on a foggy evening, only to see your phone's AR compass spin wildly? Or watched a drone fly down a canyon and lose its GPS signal?</strong> Camera-pose estimation—teaching a neural network to infer "Where am I?" from a single image—solves exactly that.</p>
+          <p>In this post, we'll show how we took Google's PoseNet concept and made it sharper, faster, and more robust by swapping in a ResNet backbone plus a lightweight attention module called CBAM. Along the way, you'll see how a little "focus" (both spatially and channel-wise) lets a network zoom in on the right pixels—and avoid getting fooled by passing crowds or shifting shadows.</p>
+          <img src="Images/drone_canyon.jpg" alt="Drone navigating narrow canyon without GPS." />
+          <p class="caption">Figure 1: A drone losing GPS in a narrow canyon.</p>
+        </section>
+
+        <!-- Section 2: Why Camera Pose Matters -->
+        <section>
+          <h2>Why Camera Pose Matters</h2>
+          <p><strong>Camera-pose estimation</strong> is the process of determining a camera's 6-DoF (degrees of freedom)—its position (x, y, z) and orientation (pitch, yaw, roll)—from a single RGB image. In many robotics and AR/VR applications, knowing exactly where the camera is and how it's oriented is critical:</p>
+          <ul>
+            <li><strong>Autonomous drones:</strong> In GPS-denied environments (indoor warehouses, dense forests), a drone must rely on its camera to navigate safely around obstacles.</li>
+            <li><strong>Augmented reality headsets:</strong> AR overlays must align precisely with the real world. A small pose error can break immersion or even cause motion sickness.</li>
+            <li><strong>Self-driving cars:</strong> Visual localization helps correct drift when LIDAR or GPS data is unreliable (e.g., urban canyons).</li>
+          </ul>
+          <p>The classic approach—feature-tracking combined with a Kalman filter—works well in textured, static environments. But in low-texture scenes or dynamic settings, traditional pipelines struggle. That's where deep-learning-based pose estimators like PoseNet come in.</p>
+        </section>
+
+        <!-- Section 3: From PoseNet to ResNet+CBAM -->
+        <section>
+          <h2>From PoseNet to ResNet + CBAM: The Big Idea</h2>
+
+          <h3>Brief Recap of PoseNet</h3>
+          <p>In 2015, Kendall et al. proposed <strong>PoseNet</strong>—a convolutional neural network that takes a single image and directly regresses a 6-DoF pose. PoseNet used a VGG16 backbone pre-trained on ImageNet. It was revolutionary, but had limitations:</p>
+          <ul>
+            <li><strong>Sub-par accuracy:</strong> VGG16 sometimes got distracted by uninformative pixels (e.g., sky, ground).</li>
+            <li><strong>Overfitting:</strong> It tended to overfit to the training scene.</li>
+          </ul>
+
+          <h3>What Is CBAM?</h3>
+          <p>The <strong>Convolutional Block Attention Module (CBAM)</strong> is a lightweight plug-in introduced by Woo et al. in ECCV 2018. CBAM asks two questions at each layer:</p>
+          <ol>
+            <li><strong>Channel attention:</strong> "Which feature maps are most informative?"</li>
+            <li><strong>Spatial attention:</strong> "Which spatial locations matter most?"</li>
+          </ol>
+          <img src="Images/CBAM_model.jpg" alt="Diagram of CBAM channel and spatial attention modules." />
+          <p class="caption">Figure 2: CBAM's two-stage attention: channel-wise and spatial.</p>
+
+          <h3>Why ResNet?</h3>
+          <p><strong>ResNet</strong> introduced skip-connections to allow very deep networks to train without vanishing gradients. By combining ResNet50 with CBAM:</p>
+          <ul>
+            <li>Extract richer, deeper image features (ResNet-50's skip connections)</li>
+            <li>Guide attention to the most relevant pixels (CBAM)</li>
+          </ul>
+          <p>ResNet50 provides the "eyes," and CBAM provides the "focus."</p>
+        </section>
+
+        <!-- Section 4: Model Overview -->
+        <section>
+          <h2>High-Level Model Overview</h2>
+          <p>Full code available on <a href="https://github.com/YuerTang/Math-156-Project" target="_blank">GitHub</a>.</p>
+
+          <h3>Key Points</h3>
+          <ul>
+            <li><strong>Backbone:</strong> ResNet-50 pre-trained on ImageNet. Froze first two stages for first 10 epochs.</li>
+            <li><strong>CBAM Placement:</strong> Inserted after each ResNet stage (conv2_x through conv5_x).</li>
+            <li><strong>Pose Heads:</strong> Global average pooling → two parallel MLPs:
+              <ul>
+                <li>Translation head → predicts (x, y, z)</li>
+                <li>Rotation head → predicts quaternion (w, x, y, z)</li>
+              </ul>
+            </li>
+            <li><strong>Loss Functions:</strong> Static-β loss and learnable-β loss variants.</li>
+          </ul>
+        </section>
+
+        <!-- Section 5: Dataset -->
+        <section>
+          <h2>Our Dataset: King's College, Cambridge</h2>
+          <p>We used the <a href="http://mi.eng.cam.ac.uk/projects/relocalisation/#king's-college" target="_blank">King's College dataset</a>: ~9,950 RGB frames with ground-truth 6-DoF poses. Challenges include:</p>
+          <ul>
+            <li><strong>Lighting variations:</strong> Shadows shift as clouds pass</li>
+            <li><strong>Dynamic elements:</strong> Pedestrians, bicycles, cars</li>
+            <li><strong>Repetitive architecture:</strong> Similar-looking stone walls and archways</li>
+          </ul>
+        </section>
+
+        <!-- Section 6: Training -->
+        <section>
+          <h2>Training Procedure</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Backbone</th>
+                <th>CBAM</th>
+                <th>Loss</th>
+                <th>Epochs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>VGG16-PoseNet</td>
+                <td>VGG16</td>
+                <td>No</td>
+                <td>Static-β</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <td>ResNet50-PoseNet</td>
+                <td>ResNet50</td>
+                <td>No</td>
+                <td>Static-β</td>
+                <td>50</td>
+              </tr>
+              <tr>
+                <td>ResNet50+CBAM (ours)</td>
+                <td>ResNet50</td>
+                <td>Yes</td>
+                <td>Learnable-β</td>
+                <td>50</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Implementation Details</h3>
+          <ul>
+            <li>Framework: PyTorch 1.14, Python 3.10</li>
+            <li>Hardware: NVIDIA A100 GPU (~3 min/epoch)</li>
+            <li>Optimizer: Adam, LR 1×10⁻⁴</li>
+            <li>Batch size: 32</li>
+          </ul>
+        </section>
+
+        <!-- Section 7: Results -->
+        <section>
+          <h2>Results</h2>
+
+          <h3>Loss Curves</h3>
+          <img src="Images/learned_loss_cbam.png" alt="Learned β loss curve" />
+          <p class="caption">CBAM (purple) converges fastest with tight training-validation alignment.</p>
+
+          <img src="Images/learned_loss_log.png" alt="Loss curve (log scale)" />
+          <p class="caption">Log scale shows ResNetCBAM decaying exponentially while others plateau.</p>
+
+          <h3>Key Results</h3>
+          <ul>
+            <li><strong>25% reduction</strong> in translation error</li>
+            <li><strong>35% reduction</strong> in rotation error</li>
+            <li>Fastest convergence among all architectures</li>
+            <li>Tightest generalization gap</li>
+          </ul>
+        </section>
+
+        <!-- Section 8: Why CBAM Helps -->
+        <section>
+          <h2>Why CBAM Helps</h2>
+          <ul>
+            <li><strong>Channel Attention:</strong> Emphasizes informative features (edges, distinct frames) while suppressing noise (sky, ground)</li>
+            <li><strong>Spatial Attention:</strong> Localizes key areas—unique brick patches, statues—that anchor pose estimation</li>
+            <li><strong>Result:</strong> Network "zooms in" on landmarks, robust to distractions</li>
+          </ul>
+        </section>
+
+        <!-- Section 9: Discussion -->
+        <section>
+          <h2>Discussion & Future Work</h2>
+          <h3>Limitations</h3>
+          <ul>
+            <li>Only tested on outdoor dataset (King's College)</li>
+            <li>+2GB GPU memory overhead from CBAM</li>
+            <li>Not trained for heavy crowd conditions</li>
+          </ul>
+
+          <h3>Future Work</h3>
+          <ul>
+            <li>Test on indoor 7-Scenes dataset</li>
+            <li>Explore lighter backbones (ResNet18, MobileNetV2)</li>
+            <li>Add temporal consistency via LSTM</li>
+          </ul>
+        </section>
+
+        <!-- Section 10: Conclusion -->
+        <section>
+          <h2>Conclusion</h2>
+          <p>By combining ResNet50 with CBAM, we achieved <strong>25% translation error reduction</strong> and <strong>35% rotation error reduction</strong>. The learnable-β loss provided smoother convergence while CBAM focused the network on pose-relevant landmarks.</p>
+          <p><strong>Applications:</strong> Autonomous drones, AR/VR headsets, indoor navigation systems.</p>
+          <p><strong>Code:</strong> <a href="https://github.com/YuerTang/Math-156-Project" target="_blank">github.com/YuerTang/Math-156-Project</a></p>
+        </section>
+
+        <!-- References -->
+        <section>
+          <h2>References</h2>
+          <ul>
+            <li>Kendall et al. (2015). <a href="https://arxiv.org/abs/1505.07427" target="_blank">PoseNet</a>. ICCV 2015.</li>
+            <li>Woo et al. (2018). <a href="https://arxiv.org/abs/1807.06521" target="_blank">CBAM</a>. ECCV 2018.</li>
+            <li>He et al. (2016). <a href="https://arxiv.org/abs/1512.03385" target="_blank">ResNet</a>. CVPR 2016.</li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

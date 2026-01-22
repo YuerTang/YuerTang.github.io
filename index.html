@@ -26,49 +26,6 @@
       max-width: 480px;
     }
 
-    .featured-projects {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--spacing-md);
-    }
-
-    .featured-card {
-      background: var(--color-bg-secondary);
-      padding: var(--spacing-lg);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
-    }
-
-    .featured-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-    }
-
-    .featured-card h3 {
-      font-size: 1.125rem;
-      margin-bottom: var(--spacing-xs);
-      color: var(--color-text-primary);
-    }
-
-    .featured-card .meta {
-      font-size: 0.8125rem;
-      color: var(--color-accent);
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .featured-card p {
-      font-size: 0.9375rem;
-      color: var(--color-text-secondary);
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 640px) {
-      .featured-projects {
-        grid-template-columns: 1fr;
-      }
-    }
   </style>
 </head>
 <body>
@@ -78,7 +35,6 @@
       <a href="index.html" class="nav-logo">Yuer Tang</a>
       <div class="nav-links">
         <a href="research.html" class="nav-link">Research</a>
-        <a href="publications.html" class="nav-link">Publications</a>
         <a href="cv.pdf" class="nav-link" target="_blank">CV</a>
       </div>
     </div>
@@ -116,36 +72,27 @@
 
       <div class="divider"></div>
 
-      <!-- Featured Projects -->
+      <!-- News -->
       <section class="section">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="featured-projects">
-
-          <a href="research.html#mit" class="featured-card">
-            <h3>Disentangled Policy Control</h3>
-            <p class="meta">MIT CSAIL · 2025</p>
-            <p>Learning compact latent representations for continuous control of robotic manipulation scales.</p>
-          </a>
-
-          <a href="research.html#malp" class="featured-card">
-            <h3>Meta-Adaptive Latent Planning</h3>
-            <p class="meta">UCLA · 2025</p>
-            <p>Integrating MAML with Latent Plan Transformers for few-shot adaptation to new manipulation tasks.</p>
-          </a>
-
-          <a href="research.html#neural" class="featured-card">
-            <h3>Neural Dynamics & Mori-Zwanzig</h3>
-            <p class="meta">UCLA · ICLR 2026 Under Review</p>
-            <p>Operator-theoretic methods for explainable dynamics in neural systems.</p>
-          </a>
-
-          <a href="research.html#goal" class="featured-card">
-            <h3>Bayesian Goal Inference</h3>
-            <p class="meta">UCLA · 2023-2024</p>
-            <p>Real-time inference of agent goals using value iteration and Bayesian posterior updates.</p>
-          </a>
-
-        </div>
+        <h2 class="section-title">News</h2>
+        <ul class="news-list">
+          <li class="news-item">
+            <span class="news-date">Jan 2026</span>
+            <span class="news-content">Presented poster <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043" target="_blank">"When Linear Models Aren't Enough: Forcing as Closure in Chaotic Time Series"</a> at Joint Mathematics Meeting 2026 in Washington D.C.</span>
+          </li>
+          <li class="news-item">
+            <span class="news-date">Dec 2025</span>
+            <span class="news-content">Paper <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI/Authors" target="_blank">"Operator-Theoretic Tools for Conscious and Unconscious Brain Activity"</a> accepted to AAAI 2026 Workshop on NeuroAI.</span>
+          </li>
+          <li class="news-item">
+            <span class="news-date">Oct 2025</span>
+            <span class="news-content">Paper <a href="https://openreview.net/forum?id=RanDLuKUQT" target="_blank">"On the Dynamics of Coherent Memory Structures in Neural Fields"</a> submitted to ICLR 2026.</span>
+          </li>
+          <li class="news-item">
+            <span class="news-date">Oct 2024</span>
+            <span class="news-content">Co-authored paper <a href="https://arxiv.org/abs/2410.11359" target="_blank">"DODT: Enhanced Online Decision Transformer Learning"</a> released on arXiv.</span>
+          </li>
+        </ul>
       </section>
 
     </div>
