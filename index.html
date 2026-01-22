@@ -1,39 +1,162 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Yuer Tang</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Yuer Tang - Robotics and AI Researcher. Building robotic agents with interpretable internal models.">
+  <meta name="author" content="Yuer Tang">
 
-    <link rel="stylesheet" href="../stylesheets/styles.css">
-    <link rel="stylesheet" href="../stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta property="og:title" content="Yuer Tang">
+  <meta property="og:description" content="Robotics & AI Researcher at MIT CSAIL and UCLA">
+  <meta property="og:type" content="website">
 
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>UCLA Student</h3>
-      </header>
-      <!-- Wrapping the anchor tag within a div with class for ul-like styling -->
-      <div class="nav-list">
-        <a href="index.html" class="nav-link">Home Page</a>
+  <title>Yuer Tang</title>
+
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* Homepage-specific overrides for ultra-clean look */
+    .hero {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      max-width: 480px;
+    }
+
+    .featured-projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-md);
+    }
+
+    .featured-card {
+      background: var(--color-bg-secondary);
+      padding: var(--spacing-lg);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+
+    .featured-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .featured-card h3 {
+      font-size: 1.125rem;
+      margin-bottom: var(--spacing-xs);
+      color: var(--color-text-primary);
+    }
+
+    .featured-card .meta {
+      font-size: 0.8125rem;
+      color: var(--color-accent);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .featured-card p {
+      font-size: 0.9375rem;
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 640px) {
+      .featured-projects {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Yuer Tang</a>
+      <div class="nav-links">
         <a href="research.html" class="nav-link">Research</a>
+        <a href="publications.html" class="nav-link">Publications</a>
+        <a href="cv.pdf" class="nav-link" target="_blank">CV</a>
       </div>
-
-      <section>
-        <h1>Yuer Tang</h1>
-
-        <p>Hi, I’m Yuer Tang. I’m majoring in Data Theory, with a self-designed curriculum aimed at exploring computational cognitive science. My core interest lies in the statistical modeling of the computational basis of human cognition.</p>
-        <p>Specifically, I’m focused on understanding how humans can learn so rapidly from minimal data. I approach this from a statistical inference perspective, studying how we make inductive leaps—generating many ideas from just a few experiences. My goal is to apply these principles to both better understand human cognition and to develop more powerful machine learning algorithms.</p>
-
-      </section>
-      <footer>
-        <p>© 2024 Yuer Tang. All rights reserved.</p>
-      </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-  </body>
-</html>
+  </nav>
 
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-image">
+          <img src="images/profile.jpg" alt="Yuer Tang">
+        </div>
+        <div class="hero-content">
+          <h1 class="hero-title">Yuer Tang</h1>
+          <p class="hero-subtitle">Robotics & AI Researcher</p>
+          <p class="hero-affiliation">MIT CSAIL · UCLA</p>
+          <p class="hero-description">
+            Building robotic agents with interpretable internal models for reliable control and human guidance.
+          </p>
+          <div class="social-links">
+            <a href="mailto:yuertang17@g.ucla.edu" class="social-link">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+            <a href="https://github.com/YuerTang" class="social-link" target="_blank">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://linkedin.com/in/yuertang" class="social-link" target="_blank">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Featured Projects -->
+      <section class="section">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="featured-projects">
+
+          <a href="research.html#mit" class="featured-card">
+            <h3>Disentangled Policy Control</h3>
+            <p class="meta">MIT CSAIL · 2025</p>
+            <p>Learning compact latent representations for continuous control of robotic manipulation scales.</p>
+          </a>
+
+          <a href="research.html#malp" class="featured-card">
+            <h3>Meta-Adaptive Latent Planning</h3>
+            <p class="meta">UCLA · 2025</p>
+            <p>Integrating MAML with Latent Plan Transformers for few-shot adaptation to new manipulation tasks.</p>
+          </a>
+
+          <a href="research.html#neural" class="featured-card">
+            <h3>Neural Dynamics & Mori-Zwanzig</h3>
+            <p class="meta">UCLA · ICLR 2026 Under Review</p>
+            <p>Operator-theoretic methods for explainable dynamics in neural systems.</p>
+          </a>
+
+          <a href="research.html#goal" class="featured-card">
+            <h3>Bayesian Goal Inference</h3>
+            <p class="meta">UCLA · 2023-2024</p>
+            <p>Real-time inference of agent goals using value iteration and Bayesian posterior updates.</p>
+          </a>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Yuer Tang</p>
+    </div>
+  </footer>
+
+</body>
+</html>

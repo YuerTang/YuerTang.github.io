@@ -1,94 +1,188 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Yuer Tang - Goal Inference Project</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Research projects by Yuer Tang in robotics, representation learning, and AI.">
+  <meta name="author" content="Yuer Tang">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-      blockquote {
-        margin-left: 0;
-        font-style: italic;
-        font-size: 1.1em;
-        color: #555;
-        border-left: 5px solid #ccc;
-        padding-left: 15px;
-      }
-      .image-gallery img {
-        display: inline-block;
-        width: 45%;
-        margin-right: 5%;
-        vertical-align: middle;
-      }
-      .image-gallery img:last-child {
-        margin-right: 0;
-      }
-      p {
-        clear: both;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1><a href="index.html" target="_blank">Internships & Research</a></h1>
-        <div class="nav-list">
-          <a href="index.html" class="nav-link">Home Page</a>
-          <a href="projects.html" class="nav-link">Projects</a>
+  <title>Research - Yuer Tang</title>
+
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Yuer Tang</a>
+      <div class="nav-links">
+        <a href="research.html" class="nav-link active">Research</a>
+        <a href="publications.html" class="nav-link">Publications</a>
+        <a href="cv.pdf" class="nav-link" target="_blank">CV</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title">Research</h1>
+        <p class="page-description">
+          My research focuses on building robotic agents with internal models that support
+          reliable control, long-horizon planning, and adaptation to human guidance.
+        </p>
+      </div>
+
+      <!-- Project 1: MIT CSAIL -->
+      <article id="mit" class="project-card">
+        <div class="project-header">
+          <h2 class="project-title">Disentangled Scale Control for Robotic Policies</h2>
+          <p class="project-meta">MIT CSAIL · Leslie Kaelbling Lab · Jun 2025 – Present</p>
+          <p class="project-meta">Mentor: Dr. Jiayuan Mao</p>
         </div>
-      </header>
+        <p class="project-description">
+          Developing compact, interpretable latent representations for fine-grained robotic manipulation.
+          The goal is to learn parameterizations where a small number of latent dimensions can continuously
+          control policy scales (e.g., door-opening angle, motion speed) while preserving smoothness and
+          interpretability for downstream task adaptation.
+        </p>
+        <ul class="project-highlights">
+          <li>Built novel beta-VAE architecture with convolutional layers that preserves spatial and temporal structure of 6-DoF manipulation trajectories</li>
+          <li>Engineered custom loss combining pairwise ranking and masked KL divergence to capture continuous policy scales</li>
+          <li>Developed trajectory collection pipeline using MetaWorld simulation for model validation</li>
+          <li>Created inverse kinematics visualization tool using Random Forest for real-time policy evaluation</li>
+          <li>Pioneering LLM-assisted scale perception module to automate labeling and enable generalized policy learning</li>
+        </ul>
+      </article>
 
-      <section>
-        <h2>TVMs and Understanding the latent representation </h2>
-        <p>Despite the widespread success of artificial intelligence (AI), the fundamental question remains: how exactly do neural networks (NNs) store, interpret, and retrieve, i.e., learn, information? Exploring this question creates new opportunities to advance explainable AI and helps us develop enhanced physics-aware architectures. In particular, this research will investigate how dynamical systems theory can be used to explore and understand latent representations of NNs, providing deeper insights into their learning processes and potential explainability.		
+      <!-- Project 2: Wu Lab -->
+      <article id="malp" class="project-card">
+        <div class="project-header">
+          <h2 class="project-title">Meta-Adaptive Latent Planning (MALP)</h2>
+          <p class="project-meta">UCLA · Yingnian Wu Lab · Mar 2025 – Present</p>
+        </div>
+        <p class="project-description">
+          Improving multi-task performance of Latent Plan Transformers by integrating Model-Agnostic
+          Meta-Learning (MAML). The project addresses how agents can generalize across manipulation
+          tasks while producing stable, continuous control through learned strategy latents.
+        </p>
+        <ul class="project-highlights">
+          <li>Integrated MAML with Latent Plan Transformer, creating MPI-MAML (Meta-Planning as Inference)</li>
+          <li>Rebuilt LPT codebase for D4RL Kitchen dataset compatibility, improving reproducibility across meta-learning benchmarks</li>
+          <li>Engineered full MAML training loop with inner-loop K-shot adaptation and outer-loop meta-gradient accumulation</li>
+          <li>Achieved 5-shot adaptation to novel manipulation tasks through rapid task generalization</li>
+          <li>Currently implementing ANIL to test reduced inner loop computation for improved training efficiency</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://arxiv.org/abs/2410.11359" class="project-link" target="_blank">
+            <i class="fas fa-file-alt"></i> Related: DODT Paper
+          </a>
+        </div>
+      </article>
 
+      <!-- Project 3: Bertozzi Lab -->
+      <article id="neural" class="project-card">
+        <div class="project-header">
+          <h2 class="project-title">Neural Dynamics & Operator-Theoretic Methods</h2>
+          <p class="project-meta">UCLA · Andrea Bertozzi Lab · Jan 2025 – Oct 2025</p>
+          <p class="project-meta">Mentor: Dr. Justin Baker</p>
+        </div>
+        <p class="project-description">
+          Developing intrinsically explainable AI architectures using biologically inspired neural field
+          representations and operator-theoretic tools. This work investigates how dynamical systems
+          theory can reveal the structure hidden inside learned dynamics.
+        </p>
 
-          Recent studies suggest that traveling wave models (TVMs) offer an alternative approach that may address these limitations. In particular, Kim et al. demonstrated that incorporating traveling waves into basic recurrent neural networks enhances sequence learning by encoding the recent past, providing a biologically plausible mechanism for memory in neural systems [1]. These findings, along with the distinctive properties of the ‘wave’ concept, motivate this study to explore whether TVMs can improve interpretability and physical consistency across various complex physical systems. Specifically, we focus on systems where the underlying patterns inherently involve ‘rate of change’ and continuous dynamics—principles that align naturally with TVMs—such as watershed hydrology [2], ultrafast optical lasers, and protein interaction networks.				
-          The latent space produced by these models will be analyzed to uncover patterns, features, and relationships within these complex systems. This approach will be empirically validated through both synthetic dynamical systems tasks and real-world data, leveraging insights from both traveling wave mechanisms and hydrological concept formation studies. 
-          References
-          [1] Keller, T. Anderson, et al. "Traveling Waves Encode the Recent Past and Enhance Sequence Learning." The Twelfth International Conference on Learning Representations, 2024, https://openreview.net/forum?id=p4S5.
-          [2] Beven, Keith J., et al. "Deep Learning, Hydrological Processes, and the Uniqueness of Place." Hydrology and Earth System Sciences, vol. 26, 2022, pp. 3079–3090. Copernicus Publications, https://hess.copernicus.org/articles/26/3079/2022/.
-          </p>
-      </section>
-
-      <section>
-        <h2>Latent Generation System</h2>
-      </section>
-
-      <section>
-        <h2>Goal Inference in a Grid World Environment</h2>
-        <p>This project aims to model and infer a player's goal within a grid-based environment using <strong>Bayesian inference</strong> and <strong>value iteration</strong>. The core idea is to understand how an agent can predict the goal of another agent based on observed actions and state transitions, utilizing principles from reinforcement learning.</p>
-
-        <p>The project consists of two main components:</p>
-
-
-        <h3>Goal Inference Map (GIM)</h3>
-        <ul>
-          <li>For each potential goal in the environment, a <strong>policy</strong> is generated using <strong>value iteration</strong> to estimate the optimal actions the agent should take to reach the goal.</li>
-          <li>This policy helps compute the likelihood of observed actions, indicating how probable it is for the agent to be pursuing a specific goal based on its behavior.</li>
+        <h4 class="mb-sm">Coherent Memory Structures in Neural Fields</h4>
+        <ul class="project-highlights">
+          <li>Developed framework using biologically inspired neural field representations for explainable AI</li>
+          <li>Contributed to figures, boundary condition handling (periodic, Dirichlet, free-flow), and neuroscience literature review</li>
+          <li>Paper under review at ICLR 2026</li>
         </ul>
 
-        <h3>Posterior Update Mechanism</h3>
-        <p>Given observed actions, a Bayesian posterior distribution is updated over possible goals. This process helps refine the prediction of which goal the agent is likely aiming for. The <strong>posterior</strong> is updated by comparing the observed action to the predicted optimal actions (from the GIM) for each goal, adjusting the likelihoods based on a decay factor.</p>
+        <h4 class="mb-sm">Conscious-Unconscious Neural Dynamics</h4>
+        <ul class="project-highlights">
+          <li>Applied Mori-Zwanzig projection operator formalism to separate neural dynamics into resolved (unconscious) and unresolved (conscious) states</li>
+          <li>Achieved major MSE reduction on neural data (awake state: 3.140 → 0.101) compared to baseline DMD</li>
+          <li>First-author paper under review at AAAI 2026 NeuroAI Workshop</li>
+        </ul>
 
-        <p>The environment is represented by a grid with predefined obstacles (blocks) and potential goals. Using this framework, the model can predict and update the probability distribution of the agent’s goal as it navigates the environment.</p>
+        <h4 class="mb-sm">HAVOK for Chaotic Time Series</h4>
+        <ul class="project-highlights">
+          <li>Clarified through mathematical derivation why HAVOK forcing emerges when truncated delay-embedded coordinates fail to span a Koopman-invariant subspace</li>
+          <li>Validated on Lorenz and Rössler systems to localize nonlinear transitions during regime shifts</li>
+          <li>Presenting at 2026 Joint Mathematics Meeting in Washington D.C.</li>
+        </ul>
 
-        <div class="image-gallery">
-          <img src="path_to_goal_inference_diagram.jpg" alt="Goal Inference Diagram">
-          <img src="path_to_gim_diagram1.jpg" alt="Goal Inference Map">
-          <img src="path_to_gim_diagram2.jpg" alt="Posterior Update Mechanism">
+        <div class="project-links">
+          <a href="https://openreview.net/forum?id=RanDLuKUQT" class="project-link" target="_blank">
+            <i class="fas fa-file-alt"></i> ICLR Paper
+          </a>
+          <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI" class="project-link" target="_blank">
+            <i class="fas fa-file-alt"></i> AAAI Workshop
+          </a>
+          <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043" class="project-link" target="_blank">
+            <i class="fas fa-presentation"></i> JMM Abstract
+          </a>
         </div>
-      </section>
+      </article>
 
-      <footer>
-        <p>© 2024 Yuer Tang. All rights reserved.</p>
-      </footer>
+      <!-- Project 4: Gao Lab -->
+      <article id="goal" class="project-card">
+        <div class="project-header">
+          <h2 class="project-title">Online Bayesian Goal Inference</h2>
+          <p class="project-meta">UCLA · Tao Gao Lab · Mar 2023 – May 2024</p>
+        </div>
+        <p class="project-description">
+          Modeling and inferring agent goals within grid-based environments using Bayesian inference
+          and reinforcement learning. This project explored how observers can predict goals from
+          observed actions using structured probabilistic reasoning.
+        </p>
+        <ul class="project-highlights">
+          <li>Engineered foundational MDP solver using Value Iteration and Bellman updates to pre-compute optimal value functions for multiple hypothetical goals</li>
+          <li>Developed gamma-discounted softmax policy extractor with temperature parameter for controlled action stochasticity</li>
+          <li>Implemented robust Bayesian goal inference mechanism for real-time posterior updates based on observed actions</li>
+          <li>Built full-stack, low-latency online visualization system using Python (RL backend) and Node.js/Socket.io (frontend) for real-time demonstration</li>
+        </ul>
+      </article>
+
+      <!-- Additional Project: Camera Pose -->
+      <article class="project-card">
+        <div class="project-header">
+          <h2 class="project-title">LightCBAM-ResNet for Camera Pose Estimation</h2>
+          <p class="project-meta">UCLA · MATH 156 Course Project · 2025</p>
+        </div>
+        <p class="project-description">
+          Developed a lightweight attention-enhanced backbone for 6-DoF camera pose estimation,
+          achieving significant improvements in both translation and rotation error on the
+          King's College Cambridge dataset.
+        </p>
+        <ul class="project-highlights">
+          <li>Integrated CBAM (Convolutional Block Attention Module) with ResNet50 backbone</li>
+          <li>Achieved 25% reduction in translation error and 35% reduction in rotation error</li>
+          <li>Implemented learned-β loss for faster convergence and better generalization</li>
+          <li>Trained on NVIDIA A100 GPU with 9,950 RGB frames</li>
+        </ul>
+        <div class="project-links">
+          <a href="Projects/camera-pose-blog.html" class="project-link">
+            <i class="fas fa-blog"></i> Read Blog Post
+          </a>
+        </div>
+      </article>
+
     </div>
+  </main>
 
-    <script src="javascripts/scale.fix.js"></script>
-  </body>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
 </html>
