@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Bayesian Goal Inference | Understanding Intentions Through Actions</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Real-time Bayesian framework for inferring human goals from observed actions. Interactive demo and research project by Yuer Tang.">
+  <meta name="author" content="Yuer Tang">
+  <meta name="keywords" content="goal inference, Bayesian inference, cognitive science, MDP, value iteration, AI, machine learning">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Online Bayesian Goal Inference">
+  <meta property="og:description" content="Watch AI infer human intentions in real-time">
+  <meta property="og:image" content="assets/og-image.png">
+  <meta property="og:url" content="https://yuertang.github.io/projects/goal-inference">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Online Bayesian Goal Inference">
+  <meta name="twitter:description" content="Watch AI infer human intentions in real-time">
+  <meta name="twitter:image" content="assets/og-image.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- KaTeX for math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <style>
+    /* ========================================
+       CSS Variables - Design System
+       ======================================== */
+    :root {
+      /* Colors */
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-code: #f1f5f9;
+
+      --text-primary: #0f172a;
+      --text-body: #334155;
+      --text-muted: #64748b;
+
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --accent-dark: #1d4ed8;
+
+      --border: #e2e8f0;
+
+      /* Goal colors */
+      --goal-1: #dc2626;
+      --goal-2: #2563eb;
+      --goal-3: #059669;
+
+      /* Typography */
+      --font-display: 'Inter', -apple-system, sans-serif;
+      --font-body: 'Source Serif 4', Georgia, serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      /* Spacing */
+      --section-gap: 5rem;
+      --content-max: 720px;
+      --wide-max: 960px;
+    }
+
+    /* ========================================
+       Base Styles
+       ======================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      line-height: 1.7;
+      color: var(--text-body);
+      background: var(--bg-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ========================================
+       Typography
+       ======================================== */
+    h1, h2, h3, h4 {
+      font-family: var(--font-display);
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin: 0 0 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-top: 3rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 1.5rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ========================================
+       Layout
+       ======================================== */
+    .container {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .container--wide {
+      max-width: var(--wide-max);
+    }
+
+    section {
+      padding: var(--section-gap) 0;
+    }
+
+    /* ========================================
+       Hero Section
+       ======================================== */
+    .hero {
+      padding: 4rem 0 3rem;
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+    }
+
+    .hero__title {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero__subtitle {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero__authors {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--text-body);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero__affiliation {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero__links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .hero__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-light);
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .hero__link:hover {
+      background: #bfdbfe;
+      text-decoration: none;
+    }
+
+    .hero__demo {
+      max-width: 600px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    .hero__demo img,
+    .hero__demo video {
+      width: 100%;
+      display: block;
+    }
+
+    /* ========================================
+       Abstract
+       ======================================== */
+    .abstract {
+      background: var(--bg-secondary);
+      border-left: 4px solid var(--accent);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .abstract p {
+      margin: 0;
+      font-size: 1.0625rem;
+    }
+
+    /* ========================================
+       Algorithm Steps
+       ======================================== */
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 12px;
+    }
+
+    .step__number {
+      flex-shrink: 0;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: white;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .step__content h3 {
+      margin: 0 0 0.75rem;
+    }
+
+    .step__content p {
+      margin: 0;
+    }
+
+    /* ========================================
+       Math Blocks
+       ======================================== */
+    .math-block {
+      background: var(--bg-code);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 8px;
+      overflow-x: auto;
+      text-align: center;
+    }
+
+    .math-inline {
+      font-family: var(--font-mono);
+      background: var(--bg-code);
+      padding: 0.125em 0.375em;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+
+    /* ========================================
+       Interactive Demo Section
+       ======================================== */
+    .demo-section {
+      background: var(--bg-secondary);
+      padding: 4rem 0;
+    }
+
+    .demo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .demo-wrapper {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .demo-canvas-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    #demo-canvas {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .demo-instructions {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .demo-instructions kbd {
+      display: inline-block;
+      padding: 0.25em 0.5em;
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .belief-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    .belief-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .belief-bar__label {
+      flex-shrink: 0;
+      width: 80px;
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .belief-bar__track {
+      flex: 1;
+      height: 24px;
+      background: var(--bg-code);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .belief-bar__fill {
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .belief-bar__fill--g1 { background: var(--goal-1); }
+    .belief-bar__fill--g2 { background: var(--goal-2); }
+    .belief-bar__fill--g3 { background: var(--goal-3); }
+
+    .belief-bar__value {
+      flex-shrink: 0;
+      width: 50px;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      text-align: right;
+    }
+
+    /* ========================================
+       Figure/Diagram
+       ======================================== */
+    figure {
+      margin: 2rem 0;
+    }
+
+    figure img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    figcaption {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 0.75rem;
+    }
+
+    /* ========================================
+       Citation Block
+       ======================================== */
+    .citation {
+      margin: 3rem 0;
+    }
+
+    .citation__label {
+      font-family: var(--font-display);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .citation__bibtex {
+      background: var(--bg-code);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre;
+    }
+
+    /* ========================================
+       References
+       ======================================== */
+    .references {
+      font-size: 0.9rem;
+    }
+
+    .references ol {
+      padding-left: 1.5rem;
+    }
+
+    .references li {
+      margin-bottom: 0.75rem;
+    }
+
+    /* ========================================
+       Footer
+       ======================================== */
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--text-muted);
+    }
+
+    /* ========================================
+       Responsive
+       ======================================== */
+    @media (max-width: 768px) {
+      .hero__title {
+        font-size: 2rem;
+      }
+
+      .step {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .hero__links {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================
+       Hero Section
+       ======================================== -->
+  <header class="hero">
+    <div class="container">
+      <h1 class="hero__title">Online Bayesian Goal Inference</h1>
+      <p class="hero__subtitle">Understanding human intentions through observed actions</p>
+
+      <p class="hero__authors">
+        <a href="https://yuertang.github.io">Yuer Tang</a>,
+        <a href="#">Tao Gao</a>
+      </p>
+      <p class="hero__affiliation">UCLA · Computational Vision and Learning Lab</p>
+
+      <div class="hero__links">
+        <a href="#" class="hero__link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          Paper
+        </a>
+        <a href="https://github.com/YuerTang/Online_Goal_Inference_Modeling" class="hero__link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          Code
+        </a>
+        <a href="#demo" class="hero__link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Demo
+        </a>
+      </div>
+
+      <div class="hero__demo">
+        <!-- Replace with actual demo GIF -->
+        <img src="assets/demo.gif" alt="Goal inference demo showing real-time belief updates">
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================
+       Abstract
+       ======================================== -->
+  <section>
+    <div class="container">
+      <div class="abstract">
+        <p>
+          How do we understand what others are trying to achieve? This project implements a
+          <strong>real-time Bayesian framework</strong> that infers human goals from observed actions.
+          As a person navigates toward unknown destinations, the system continuously updates its
+          beliefs about their intentions—demonstrating how AI can reason about human behavior
+          even when that behavior is imperfect.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       The Approach
+       ======================================== -->
+  <section>
+    <div class="container">
+      <h2>How It Works</h2>
+
+      <p>
+        The framework combines three key ideas from cognitive science and AI: modeling goals as
+        planning problems, computing how likely actions are under each goal, and using Bayes'
+        rule to update beliefs as new evidence arrives.
+      </p>
+
+      <div class="step">
+        <div class="step__number">1</div>
+        <div class="step__content">
+          <h3>Model Each Goal as an MDP</h3>
+          <p>
+            For each candidate goal, we compute the optimal value function using Value Iteration.
+            This tells us what a rational agent <em>should</em> do at every position to reach that goal.
+          </p>
+        </div>
+      </div>
+
+      <div class="math-block">
+        V(s) = max<sub>a</sub> Σ T(s,a,s') × [R(s,a,s') + γV(s')]
+      </div>
+
+      <div class="step">
+        <div class="step__number">2</div>
+        <div class="step__content">
+          <h3>Compute Action Likelihoods with Bounded Rationality</h3>
+          <p>
+            Real humans don't always act optimally. We model this using a softmax policy with a
+            temperature parameter—actions that are nearly optimal are still likely, but suboptimal
+            actions become increasingly unlikely.
+          </p>
+        </div>
+      </div>
+
+      <div class="math-block">
+        P(a | s, goal) ∝ exp(Q(s, a, goal) / τ)
+      </div>
+
+      <div class="step">
+        <div class="step__number">3</div>
+        <div class="step__content">
+          <h3>Update Beliefs with Bayes' Rule</h3>
+          <p>
+            As each action is observed, we update our belief distribution over goals. Actions that
+            are likely under a goal increase our belief in that goal; unlikely actions decrease it.
+          </p>
+        </div>
+      </div>
+
+      <div class="math-block">
+        P(goal | actions) ∝ P(actions | goal) × P(goal)
+      </div>
+
+      <figure>
+        <img src="assets/algorithm-flow.svg" alt="Algorithm flowchart showing the three steps">
+        <figcaption>Figure 1: The goal inference pipeline processes observed actions through three stages.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ========================================
+       Interactive Demo
+       ======================================== -->
+  <section class="demo-section" id="demo">
+    <div class="demo-container">
+      <h2 style="text-align: center; border: none; padding: 0;">Try It Yourself</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">
+        Navigate using arrow keys. Watch how the AI updates its beliefs about which goal you're heading toward.
+      </p>
+
+      <div class="demo-wrapper">
+        <div class="demo-canvas-container">
+          <canvas id="demo-canvas" width="400" height="400"></canvas>
+        </div>
+
+        <p class="demo-instructions">
+          Use <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to move
+        </p>
+
+        <div class="belief-bars">
+          <div class="belief-bar">
+            <span class="belief-bar__label">Goal 1</span>
+            <div class="belief-bar__track">
+              <div class="belief-bar__fill belief-bar__fill--g1" style="width: 33%"></div>
+            </div>
+            <span class="belief-bar__value">33%</span>
+          </div>
+          <div class="belief-bar">
+            <span class="belief-bar__label">Goal 2</span>
+            <div class="belief-bar__track">
+              <div class="belief-bar__fill belief-bar__fill--g2" style="width: 33%"></div>
+            </div>
+            <span class="belief-bar__value">33%</span>
+          </div>
+          <div class="belief-bar">
+            <span class="belief-bar__label">Goal 3</span>
+            <div class="belief-bar__track">
+              <div class="belief-bar__fill belief-bar__fill--g3" style="width: 33%"></div>
+            </div>
+            <span class="belief-bar__value">33%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       References & Citation
+       ======================================== -->
+  <section>
+    <div class="container">
+      <h2>Citation</h2>
+
+      <div class="citation">
+        <p class="citation__label">BibTeX</p>
+        <pre class="citation__bibtex">@misc{tang2024goalinference,
+  author    = {Tang, Yuer and Gao, Tao},
+  title     = {Online Bayesian Goal Inference},
+  year      = {2024},
+  publisher = {GitHub},
+  url       = {https://github.com/YuerTang/Online_Goal_Inference_Modeling}
+}</pre>
+      </div>
+
+      <h2>References</h2>
+
+      <div class="references">
+        <ol>
+          <li>
+            Baker, C. L., Saxe, R., & Tenenbaum, J. B. (2009).
+            <a href="https://doi.org/10.1016/j.cognition.2009.07.005">Action understanding as inverse planning</a>.
+            <em>Cognition, 113</em>(3), 329-349.
+          </li>
+          <li>
+            Zhi-Xuan, T., Mann, J., Silver, T., Tenenbaum, J. B., & Mansinghka, V. K. (2020).
+            <a href="https://proceedings.neurips.cc/paper/2020/hash/df3aebc649f9e3b674eeb790a4da224e-Abstract.html">Online Bayesian Goal Inference for Boundedly-Rational Planning Agents</a>.
+            <em>NeurIPS 33</em>.
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       Footer
+       ======================================== -->
+  <footer>
+    <div class="container">
+      <p>
+        This page was built using the
+        <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a>.
+      </p>
+      <p>© 2024 Yuer Tang · UCLA</p>
+    </div>
+  </footer>
+
+  <!-- Demo JavaScript (placeholder) -->
+  <script>
+    // This would be replaced with actual game logic
+    const canvas = document.getElementById('demo-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Simple placeholder rendering
+    function drawGrid() {
+      const cellSize = 40;
+      const gridSize = 10;
+
+      // Background
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillRect(0, 0, 400, 400);
+
+      // Grid lines
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= gridSize; i++) {
+        ctx.beginPath();
+        ctx.moveTo(i * cellSize, 0);
+        ctx.lineTo(i * cellSize, 400);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(0, i * cellSize);
+        ctx.lineTo(400, i * cellSize);
+        ctx.stroke();
+      }
+
+      // Goals
+      const goals = [[9, 0], [9, 4], [9, 9]];
+      const goalColors = ['#dc2626', '#2563eb', '#059669'];
+      goals.forEach((goal, i) => {
+        ctx.fillStyle = goalColors[i] + '40';
+        ctx.fillRect(goal[0] * cellSize, goal[1] * cellSize, cellSize, cellSize);
+        ctx.fillStyle = goalColors[i];
+        ctx.font = '12px Inter';
+        ctx.textAlign = 'center';
+        ctx.fillText('G' + (i+1), goal[0] * cellSize + 20, goal[1] * cellSize + 25);
+      });
+
+      // Player
+      ctx.fillStyle = '#3b82f6';
+      ctx.beginPath();
+      ctx.arc(0.5 * cellSize + 20, 4.5 * cellSize + 20, 15, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    drawGrid();
+  </script>
+
+</body>
+</html>
