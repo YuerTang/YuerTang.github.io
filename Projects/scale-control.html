@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Disentangled Scale Control for Robotic Policies — Yuer Tang, MIT CSAIL">
+  <meta name="author" content="Yuer Tang">
+
+  <link rel="canonical" href="https://yuertang.dev/Projects/scale-control.html">
+  <meta property="og:title" content="Disentangled Scale Control for Robotic Policies">
+  <meta property="og:description" content="Compact, interpretable latent representations for fine-grained robotic manipulation.">
+  <meta property="og:type" content="article">
+
+  <title>Scale Control — Yuer Tang</title>
+
+  <link rel="stylesheet" href="../stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Disentangled Scale Control for Robotic Policies",
+    "url": "https://yuertang.dev/Projects/scale-control.html",
+    "description": "Compact, interpretable latent representations for fine-grained robotic manipulation with continuous scale control.",
+    "author": [
+      { "@type": "Person", "name": "Yuer Tang", "url": "https://yuertang.dev/" },
+      { "@type": "Person", "name": "Jiayuan Mao", "url": "https://jiayuanm.com/" }
+    ],
+    "sourceOrganization": { "@type": "Organization", "name": "MIT CSAIL" },
+    "datePublished": "2025",
+    "about": ["Robotics", "Representation Learning", "Policy Learning"]
+  }
+  </script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">Yuer Tang</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="../index.html" class="nav-link" data-i18n="nav.research">Research</a>
+        <a href="../publications.html" class="nav-link" data-i18n="nav.publications">Publications</a>
+        <a href="../blog.html" class="nav-link" data-i18n="nav.insights">Insights</a>
+        <a href="../cv.pdf" class="nav-link" target="_blank">CV</a>
+        <div class="lang-switcher">
+          <button class="lang-btn" aria-label="Change language">EN</button>
+          <div class="lang-dropdown">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="es">Español</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="de">Deutsch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Project Hero -->
+      <section class="project-page-hero reveal">
+        <h1 class="project-page-title">Disentangled Scale Control for Robotic Policies</h1>
+        <p class="project-page-authors">
+          <a href="../index.html">Yuer Tang</a>,
+          <a href="https://jiayuanm.com/" target="_blank">Jiayuan Mao</a>
+        </p>
+        <span class="project-page-venue">MIT CSAIL · Leslie Kaelbling Lab · 2025</span>
+        <div class="project-page-actions">
+          <span class="project-page-btn project-page-btn--disabled"><i class="fas fa-file-alt"></i> Paper (coming soon)</span>
+          <span class="project-page-btn project-page-btn--disabled"><i class="fas fa-code"></i> Code (coming soon)</span>
+        </div>
+      </section>
+
+      <!-- Abstract -->
+      <section class="project-page-section reveal">
+        <h2>Abstract</h2>
+        <p>
+          We develop compact, interpretable latent representations for fine-grained robotic manipulation.
+          Our approach learns parameterizations where a small number of latent dimensions can continuously
+          control policy scales (e.g., door-opening angle, motion speed) while preserving smoothness and
+          interpretability for downstream task adaptation. The learned representation supports gradual
+          adjustments rather than discrete switches, enabling humans to understand and manipulate scale-related
+          parameters in downstream tasks.
+        </p>
+      </section>
+
+      <!-- Key Figure -->
+      <div class="figure-full reveal--scale">
+        <div class="figure-placeholder" style="min-height: 360px;">
+          Method overview figure — coming soon
+        </div>
+        <p class="figure-caption">Figure 1: Overview of the disentangled scale control framework. A beta-VAE architecture preserves spatial and temporal structure of 6-DoF manipulation trajectories while learning interpretable scale factors.</p>
+      </div>
+
+      <!-- Method -->
+      <section class="project-page-section reveal">
+        <h2>Method</h2>
+        <p>
+          Our framework addresses three key properties for policy parameterization:
+        </p>
+        <ul>
+          <li><strong>Compactness:</strong> A low-dimensional representation that provides easy, meaningful specifications for humans and efficient sampling for machines.</li>
+          <li><strong>Smoothness:</strong> Each parameter is a clear, continuous factor of variation, allowing continuous control over policy scales.</li>
+          <li><strong>Interpretability:</strong> The representation is disentangled, with scale-related parameters explicitly represented so that humans can understand and manipulate them.</li>
+        </ul>
+        <p>
+          We built a novel beta-VAE architecture with convolutional layers that preserves spatial and
+          temporal structure of 6-DoF manipulation trajectories. The training objective combines pairwise
+          ranking loss and masked KL divergence to capture continuous policy scales.
+        </p>
+      </section>
+
+      <!-- Key Figure 2 -->
+      <div class="figure-full reveal--scale">
+        <div class="figure-placeholder" style="min-height: 300px;">
+          Architecture diagram — coming soon
+        </div>
+        <p class="figure-caption">Figure 2: Beta-VAE architecture with custom loss combining pairwise ranking and masked KL divergence.</p>
+      </div>
+
+      <!-- Results -->
+      <section class="project-page-section reveal">
+        <h2>Results</h2>
+        <p>
+          Key achievements of this work include:
+        </p>
+        <ul>
+          <li>Novel beta-VAE architecture preserving spatial and temporal structure of 6-DoF manipulation trajectories</li>
+          <li>Custom loss combining pairwise ranking and masked KL divergence to capture continuous policy scales</li>
+          <li>Trajectory collection pipeline using MetaWorld simulation for model validation</li>
+          <li>Inverse kinematics visualization tool using Random Forest for real-time policy evaluation</li>
+          <li>LLM-assisted scale perception module to automate labeling and enable generalized policy learning</li>
+        </ul>
+      </section>
+
+      <!-- Results Figure -->
+      <div class="figure-full reveal--scale">
+        <div class="figure-placeholder" style="min-height: 300px;">
+          Results visualization — coming soon
+        </div>
+        <p class="figure-caption">Figure 3: Visualization of learned latent space showing continuous scale control across manipulation tasks.</p>
+      </div>
+
+      <!-- Demo Placeholder -->
+      <section class="project-page-section reveal">
+        <h2>Interactive Demo</h2>
+        <div class="figure-placeholder" style="min-height: 200px;">
+          Interactive demo — coming soon
+        </div>
+      </section>
+
+      <!-- Citation -->
+      <section class="project-page-section reveal">
+        <h2>Citation</h2>
+        <div class="citation-block">
+          <button class="citation-copy">Copy</button>
+          <pre>@article{tang2025scale,
+  title     = {Disentangled Scale Control for Robotic Policies},
+  author    = {Tang, Yuer and Mao, Jiayuan},
+  year      = {2025},
+  institution = {MIT CSAIL}
+}</pre>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="mailto:yuertang17@g.ucla.edu">Email</a>
+        <a href="https://github.com/YuerTang" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/yuer-tang/" target="_blank">LinkedIn</a>
+      </div>
+      <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/i18n.js" defer></script>
+  <script src="../js/animations.js" defer></script>
+</body>
+</html>

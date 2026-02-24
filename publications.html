@@ -6,20 +6,48 @@
   <meta name="description" content="Publications by Yuer Tang in robotics, machine learning, and neuroscience.">
   <meta name="author" content="Yuer Tang">
 
-  <title>Publications - Yuer Tang</title>
+  <link rel="canonical" href="https://yuertang.dev/publications.html">
+  <title>Publications — Yuer Tang</title>
 
   <link rel="stylesheet" href="stylesheets/styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Publications — Yuer Tang",
+    "url": "https://yuertang.dev/publications.html",
+    "description": "Papers, preprints, and presentations by Yuer Tang in robotics, machine learning, and neuroscience.",
+    "author": { "@type": "Person", "name": "Yuer Tang", "url": "https://yuertang.dev/" }
+  }
+  </script>
 </head>
 <body>
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">Yuer Tang</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <div class="nav-links">
-        <a href="research.html" class="nav-link">Research</a>
-        <a href="publications.html" class="nav-link active">Publications</a>
+        <a href="index.html" class="nav-link" data-i18n="nav.research">Research</a>
+        <a href="publications.html" class="nav-link active" data-i18n="nav.publications">Publications</a>
+        <a href="blog.html" class="nav-link" data-i18n="nav.insights">Insights</a>
         <a href="cv.pdf" class="nav-link" target="_blank">CV</a>
+        <div class="lang-switcher">
+          <button class="lang-btn" aria-label="Change language">EN</button>
+          <div class="lang-dropdown">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="es">Español</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="de">Deutsch</button>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
@@ -29,7 +57,7 @@
     <div class="container">
 
       <!-- Page Header -->
-      <div class="page-header">
+      <div class="page-header reveal">
         <h1 class="page-title">Publications</h1>
         <p class="page-description">
           Papers, preprints, and presentations.
@@ -37,7 +65,7 @@
       </div>
 
       <!-- Papers Under Review -->
-      <section class="section">
+      <section class="section reveal">
         <h3 class="publications-year">Under Review</h3>
 
         <div class="publication-item">
@@ -68,7 +96,7 @@
       </section>
 
       <!-- Preprints -->
-      <section class="section">
+      <section class="section reveal">
         <h3 class="publications-year">2024</h3>
 
         <div class="publication-item">
@@ -86,7 +114,7 @@
       </section>
 
       <!-- Presentations -->
-      <section class="section">
+      <section class="section reveal">
         <h3 class="publications-year">Presentations</h3>
 
         <div class="publication-item">
@@ -109,9 +137,16 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
+      <div class="footer-links">
+        <a href="mailto:yuertang17@g.ucla.edu">Email</a>
+        <a href="https://github.com/YuerTang" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/yuer-tang/" target="_blank">LinkedIn</a>
+      </div>
       <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
     </div>
   </footer>
 
+  <script src="js/i18n.js" defer></script>
+  <script src="js/animations.js" defer></script>
 </body>
 </html>

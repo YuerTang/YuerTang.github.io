@@ -3,440 +3,238 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Yuer Tang - Robotics and AI Researcher. Building robotic agents with interpretable internal models.">
+  <meta name="description" content="Yuer Tang — Robotics and AI Researcher. Building robotic agents with interpretable internal models.">
   <meta name="author" content="Yuer Tang">
 
+  <link rel="canonical" href="https://yuertang.dev/">
   <meta property="og:title" content="Yuer Tang">
   <meta property="og:description" content="Robotics & AI Researcher at MIT CSAIL and UCLA">
+  <meta property="og:url" content="https://yuertang.dev/">
   <meta property="og:type" content="website">
 
   <title>Yuer Tang</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+  <link rel="stylesheet" href="stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    body {
-      margin: 0;
-      padding: 40px 20px;
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: 16px;
-      line-height: 1.6;
-      color: #333;
-      background: #fff;
-    }
-
-    .container {
-      max-width: 850px;
-      margin: 0 auto;
-    }
-
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .header h1 {
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: 2.5rem;
-      font-weight: normal;
-      color: #2a5db0;
-      margin: 0;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #2a5db0;
-      display: inline-block;
-    }
-
-    .tagline {
-      text-align: center;
-      font-style: italic;
-      color: #555;
-      margin: 1rem 0 1.5rem;
-    }
-
-    /* Profile + Bio Section */
-    .intro-section {
-      display: flex;
-      gap: 2.5rem;
-      align-items: flex-start;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Profile Photo */
-    .profile-photo {
-      flex-shrink: 0;
-    }
-
-    .profile-photo img {
-      width: 280px;
-      height: 280px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    /* Bio */
-    .bio {
-      flex: 1;
-    }
-
-    .bio p {
-      margin: 0 0 1rem;
-    }
-
-    /* Links */
-    .links {
-      margin-bottom: 2rem;
-    }
-
-    .links a {
-      color: #2a5db0;
-      text-decoration: none;
-    }
-
-    .links a:hover {
-      text-decoration: underline;
-    }
-
-    .links .sep {
-      color: #666;
-      margin: 0 0.3rem;
-    }
-
-    /* Section Headers */
-    h2 {
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      font-size: 1.5rem;
-      font-weight: normal;
-      color: #2a5db0;
-      text-align: center;
-      margin: 2.5rem 0 1.5rem;
-      padding-bottom: 0.3rem;
-      border-bottom: 1px solid #2a5db0;
-      display: table;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* News */
-    .news-item {
-      margin-bottom: 0.5rem;
-    }
-
-    .news-item strong {
-      font-weight: bold;
-    }
-
-    a {
-      color: #2a5db0;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Research Intro */
-    .research-intro {
-      margin-bottom: 1.5rem;
-    }
-
-    /* Project */
-    .project {
-      display: flex;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      align-items: flex-start;
-    }
-
-    .project-image {
-      flex-shrink: 0;
-    }
-
-    .project-image img {
-      width: 180px;
-      height: auto;
-      border-radius: 4px;
-    }
-
-    .project-image .placeholder {
-      width: 180px;
-      height: 120px;
-      background: #f0f0f0;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      font-size: 0.85rem;
-    }
-
-    .project-content {
-      flex: 1;
-    }
-
-    .project-title {
-      font-weight: bold;
-      color: #2a5db0;
-      margin-bottom: 0.2rem;
-    }
-
-    .project-authors {
-      color: #333;
-      font-size: 0.95rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .project-venue {
-      color: #555;
-      font-style: italic;
-      font-size: 0.95rem;
-      margin-bottom: 0.2rem;
-    }
-
-    .project-links {
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-links a {
-      color: #2a5db0;
-    }
-
-    .project-links .sep {
-      color: #2a5db0;
-      margin: 0 0.3rem;
-    }
-
-    .project-links .placeholder-link {
-      color: #999;
-    }
-
-    .project-description {
-      font-size: 0.95rem;
-      color: #333;
-      margin: 0;
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding-top: 1rem;
-      font-size: 0.85rem;
-      color: #666;
-    }
-
-    /* Responsive */
-    @media (max-width: 700px) {
-      .header h1 {
-        font-size: 2rem;
-      }
-
-      .intro-section {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-
-      .profile-photo img {
-        width: 220px;
-        height: 220px;
-      }
-
-      .project {
-        flex-direction: column;
-      }
-
-      .project-image img,
-      .project-image .placeholder {
-        width: 100%;
-        max-width: 200px;
-      }
-    }
-  </style>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Yuer Tang",
+    "url": "https://yuertang.dev/",
+    "description": "Robotics and AI Researcher. Building robotic agents with interpretable internal models."
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Yuer Tang",
+    "url": "https://yuertang.dev/",
+    "image": "https://yuertang.dev/images/profile.jpg",
+    "jobTitle": "Research Assistant",
+    "worksFor": [
+      { "@type": "Organization", "name": "MIT CSAIL", "url": "https://www.csail.mit.edu/" },
+      { "@type": "Organization", "name": "UCLA", "url": "https://www.ucla.edu/" }
+    ],
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of California, Los Angeles"
+    },
+    "knowsAbout": ["Robotics", "Artificial Intelligence", "Machine Learning", "Representation Learning", "Neural Dynamics", "Bayesian Inference", "Computer Vision"],
+    "sameAs": [
+      "https://github.com/YuerTang",
+      "https://www.linkedin.com/in/yuer-tang/"
+    ],
+    "email": "yuertang17@g.ucla.edu"
+  }]
+  </script>
 </head>
 <body>
-  <div class="container">
-
-    <div class="header">
-      <h1>Yuer Tang</h1>
-    </div>
-
-    <p class="tagline">"Build robots that learn. Understand intelligence along the way." — me</p>
-
-    <div class="intro-section">
-      <div class="profile-photo">
-        <img src="images/profile.jpg" alt="Yuer Tang">
-      </div>
-
-      <div class="bio">
-        <p>
-          Hey there! I am a fourth-year undergraduate at UCLA studying Applied Mathematics and Linguistics & Computer Science, with a minor in Data Theory and Data Science Engineering. I'm broadly interested in how robots can learn and reason—a fascination that grew out of a deeper curiosity about the nature of intelligence itself.
-        </p>
-
-        <p>
-          I'm fortunate to receive mentorship from <a href="http://www.stat.ucla.edu/~ywu/">Prof. Yingnian Wu</a> from the UCLA Statistics Department, <a href="https://sites.google.com/view/justin-baker/home">Dr. Justin Baker</a> from the UCLA Mathematics Department, and <a href="https://jiayuanm.com/">Dr. Jiayuan Mao</a> from MIT.
-        </p>
-
-        <p>
-          Beyond research, I care about writing. It's been a while since I've written regularly, and I'm thinking about picking it back up.
-        </p>
-      </div>
-    </div>
-
-    <div class="links">
-      <a href="mailto:yuertang17@g.ucla.edu">Email</a>
-      <span class="sep">/</span>
-      <a href="https://github.com/YuerTang">GitHub</a>
-      <span class="sep">/</span>
-      <a href="https://www.linkedin.com/in/yuer-tang/">LinkedIn</a>
-      <span class="sep">/</span>
-      <a href="cv.pdf">CV</a>
-    </div>
-
-    <h2>News</h2>
-
-    <p class="news-item">
-      <strong>January 2026:</strong> Paper accepted to the <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI">AAAI 2026 NeuroAI Workshop</a>. See you in Singapore!
-    </p>
-    <p class="news-item">
-      <strong>January 2026:</strong> Presented <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043">"When Linear Models Aren't Enough"</a> at the Joint Mathematics Meeting in Washington D.C.
-    </p>
-    <p class="news-item">
-      <strong>September 2025:</strong> Submitted work on <a href="https://openreview.net/forum?id=RanDLuKUQT">coherent memory structures in neural fields</a> to ICLR 2026.
-    </p>
-    <p class="news-item">
-      <strong>May 2025:</strong> Started working with <a href="https://jiayuanm.com/">Jiayuan Mao</a> at MIT CSAIL. My first time working on robotics!
-    </p>
-
-    <h2>Research</h2>
-
-    <p class="research-intro">
-      I'm interested in building robotic agents that learn and plan in ways that support people. My work spans representation learning for robot control, operator-theoretic methods for neural dynamics, and Bayesian approaches to goal inference.
-    </p>
-
-    <div class="project">
-      <div class="project-image">
-        <div class="placeholder">Image</div>
-      </div>
-      <div class="project-content">
-        <div class="project-title">Disentangled Scale Control for Robotic Policies</div>
-        <div class="project-authors">Yuer Tang, Jiayuan Mao</div>
-        <div class="project-venue">MIT CSAIL · Leslie Kaelbling Lab · 2025</div>
-        <div class="project-links">
-          <span class="placeholder-link">Website</span>
-          <span class="sep">/</span>
-          <span class="placeholder-link">Paper</span>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">Yuer Tang</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="index.html" class="nav-link active" data-i18n="nav.research">Research</a>
+        <a href="publications.html" class="nav-link" data-i18n="nav.publications">Publications</a>
+        <a href="blog.html" class="nav-link" data-i18n="nav.insights">Insights</a>
+        <a href="cv.pdf" class="nav-link" target="_blank">CV</a>
+        <!-- Language Switcher -->
+        <div class="lang-switcher">
+          <button class="lang-btn" aria-label="Change language">EN</button>
+          <div class="lang-dropdown">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="es">Español</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="de">Deutsch</button>
+          </div>
         </div>
-        <p class="project-description">
-          Developing compact, interpretable latent representations for fine-grained robotic manipulation. Learning parameterizations where a small number of latent dimensions can continuously control policy scales (e.g., door-opening angle, motion speed) while preserving smoothness and interpretability.
-        </p>
       </div>
     </div>
+  </nav>
 
-    <div class="project">
-      <div class="project-image">
-        <div class="placeholder">Image</div>
-      </div>
-      <div class="project-content">
-        <div class="project-title">Meta-Adaptive Latent Planning (MALP)</div>
-        <div class="project-authors">Yuer Tang, Yingnian Wu</div>
-        <div class="project-venue">UCLA · Yingnian Wu Lab · 2025</div>
-        <div class="project-links">
-          <span class="placeholder-link">Website</span>
-          <span class="sep">/</span>
-          <a href="https://arxiv.org/abs/2410.11359">Paper</a>
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Hero Section -->
+      <section class="hero">
+        <img src="images/profile.jpg" alt="Yuer Tang" class="hero-photo hero-animate">
+        <h1 class="hero-name hero-animate hero-animate-delay-1">Yuer Tang</h1>
+        <p class="hero-tagline hero-animate hero-animate-delay-2" data-i18n="hero.tagline">"Build robots that learn. Understand intelligence along the way."</p>
+        <p class="hero-bio hero-animate hero-animate-delay-3" data-i18n="hero.bio">
+          Fourth-year UCLA undergraduate studying Applied Mathematics and Linguistics &amp; Computer Science. I'm broadly interested in how robots can learn and reason — a fascination that grew out of a deeper curiosity about the nature of intelligence itself. Fortunate to receive mentorship from <a href="http://www.stat.ucla.edu/~ywu/">Prof. Yingnian Wu</a>, <a href="https://sites.google.com/view/justin-baker/home">Dr. Justin Baker</a>, and <a href="https://jiayuanm.com/">Dr. Jiayuan Mao</a>.
+        </p>
+        <div class="hero-links hero-animate hero-animate-delay-4">
+          <a href="mailto:yuertang17@g.ucla.edu" class="hero-link"><i class="fas fa-envelope"></i> Email</a>
+          <a href="https://github.com/YuerTang" class="hero-link" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+          <a href="https://www.linkedin.com/in/yuer-tang/" class="hero-link" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+          <a href="cv.pdf" class="hero-link" target="_blank"><i class="fas fa-file-alt"></i> CV</a>
         </div>
-        <p class="project-description">
-          Improving multi-task performance of Latent Plan Transformers by integrating Model-Agnostic Meta-Learning (MAML). Enabling agents to generalize across manipulation tasks while producing stable, continuous control through learned strategy latents.
-        </p>
-      </div>
-    </div>
+      </section>
 
-    <div class="project">
-      <div class="project-image">
-        <div class="placeholder">Image</div>
-      </div>
-      <div class="project-content">
-        <div class="project-title">Coherent Memory Structures in Neural Fields</div>
-        <div class="project-authors">Justin Baker*, Yuer Tang*, Andrea Bertozzi</div>
-        <div class="project-venue">ICLR 2026 (Under Review)</div>
-        <div class="project-links">
-          <span class="placeholder-link">Website</span>
-          <span class="sep">/</span>
-          <a href="https://openreview.net/forum?id=RanDLuKUQT">Paper</a>
+      <!-- News Section -->
+      <section class="section reveal">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="section.news">News</h2>
         </div>
-        <p class="project-description">
-          Developing intrinsically explainable AI architectures using biologically inspired neural field representations. Framework leverages coherent structures for interpretable memory and decision-making.
-        </p>
-      </div>
-    </div>
+        <ul class="news-list stagger-children">
+          <li class="news-item">
+            <span class="news-date">Jan 2026</span>
+            <p class="news-text" data-i18n="news.1">Paper accepted to the <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI">AAAI 2026 NeuroAI Workshop</a>. See you in Singapore!</p>
+          </li>
+          <li class="news-item">
+            <span class="news-date">Jan 2026</span>
+            <p class="news-text" data-i18n="news.2">Presented <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043">"When Linear Models Aren't Enough"</a> at the Joint Mathematics Meeting in Washington D.C.</p>
+          </li>
+          <li class="news-item">
+            <span class="news-date">Sep 2025</span>
+            <p class="news-text" data-i18n="news.3">Submitted work on <a href="https://openreview.net/forum?id=RanDLuKUQT">coherent memory structures in neural fields</a> to ICLR 2026.</p>
+          </li>
+          <li class="news-item">
+            <span class="news-date">May 2025</span>
+            <p class="news-text" data-i18n="news.4">Started working with <a href="https://jiayuanm.com/">Jiayuan Mao</a> at MIT CSAIL. My first time working on robotics!</p>
+          </li>
+        </ul>
+      </section>
 
-    <div class="project">
-      <div class="project-image">
-        <div class="placeholder">Image</div>
-      </div>
-      <div class="project-content">
-        <div class="project-title">Mori-Zwanzig Formalism for Neural Dynamics</div>
-        <div class="project-authors">Yuer Tang, Justin Baker, Andrea Bertozzi</div>
-        <div class="project-venue">AAAI 2026 NeuroAI Workshop</div>
-        <div class="project-links">
-          <span class="placeholder-link">Website</span>
-          <span class="sep">/</span>
-          <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI">Paper</a>
-          <span class="sep">/</span>
-          <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043">Presentation</a>
+      <!-- Research Section -->
+      <section id="research" class="section">
+        <div class="section-header reveal">
+          <h2 class="section-title" data-i18n="section.research">Research</h2>
+          <p class="section-subtitle" data-i18n="section.research.subtitle">Building robotic agents that learn and plan in ways that support people.</p>
         </div>
-        <p class="project-description">
-          Applied Mori-Zwanzig projection operator formalism to separate neural dynamics into resolved and unresolved states. Achieved major MSE reduction on neural data (awake state: 3.140 → 0.101) compared to baseline DMD.
-        </p>
-      </div>
-    </div>
 
-    <div class="project">
-      <div class="project-image">
-        <div class="placeholder">Image</div>
-      </div>
-      <div class="project-content">
-        <div class="project-title">Online Bayesian Goal Inference</div>
-        <div class="project-authors">Yuer Tang, Tao Gao</div>
-        <div class="project-venue">UCLA · Tao Gao Lab · 2023–2024</div>
-        <div class="project-links">
-          <span class="placeholder-link">Website</span>
-          <span class="sep">/</span>
-          <span class="placeholder-link">Paper</span>
+        <!-- Filter Bar -->
+        <div class="filter-bar reveal">
+          <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
+          <button class="filter-btn" data-filter="robotics" data-i18n="filter.robotics">Robotics</button>
+          <button class="filter-btn" data-filter="planning" data-i18n="filter.planning">Planning &amp; Inference</button>
+          <button class="filter-btn" data-filter="neural" data-i18n="filter.neural">Neural Dynamics</button>
+          <button class="filter-btn" data-filter="vision" data-i18n="filter.vision">Computer Vision</button>
         </div>
-        <p class="project-description">
-          Modeling and inferring agent goals within grid-based environments using Bayesian inference and reinforcement learning. Built full-stack online visualization system for real-time goal inference.
-        </p>
-      </div>
-    </div>
 
-    <div class="project">
-      <div class="project-image">
-        <div class="placeholder">Image</div>
-      </div>
-      <div class="project-content">
-        <div class="project-title">LightCBAM-ResNet for Camera Pose Estimation</div>
-        <div class="project-authors">Yuer Tang</div>
-        <div class="project-venue">UCLA · MATH 156 · 2025</div>
-        <div class="project-links">
-          <a href="Projects/camera-pose-blog.html">Website</a>
-          <span class="sep">/</span>
-          <span class="placeholder-link">Paper</span>
+        <!-- Flat Project List (horizontal cards) -->
+        <div class="preview-list stagger-children">
+
+          <a href="Projects/scale-control.html" class="preview-card" data-domain="robotics">
+            <div class="preview-card-thumb">Image</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">Disentangled Scale Control for Robotic Policies</div>
+              <div class="preview-card-meta">Yuer Tang, Jiayuan Mao · MIT CSAIL · 2025</div>
+              <div class="preview-card-desc" data-i18n="project.scale.desc">Compact, interpretable latent representations for fine-grained robotic manipulation with continuous scale control.</div>
+              <div class="preview-card-footer">
+                <span class="tag tag--robotics">Robotics</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://arxiv.org/abs/2410.11359" class="preview-card" data-domain="planning" target="_blank">
+            <div class="preview-card-thumb">Image</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">Meta-Adaptive Latent Planning (MALP)</div>
+              <div class="preview-card-meta">Yuer Tang, Yingnian Wu · UCLA · 2025</div>
+              <div class="preview-card-desc" data-i18n="project.malp.desc">Integrating MAML with Latent Plan Transformers for multi-task manipulation with rapid adaptation.</div>
+              <div class="preview-card-footer">
+                <span class="tag tag--planning">Planning</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="Projects/goal-inference.html" class="preview-card" data-domain="planning">
+            <div class="preview-card-thumb">Image</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">Online Bayesian Goal Inference</div>
+              <div class="preview-card-meta">Yuer Tang, Tao Gao · UCLA · 2023–2024</div>
+              <div class="preview-card-desc" data-i18n="project.goal.desc">Modeling and inferring agent goals in grid environments using Bayesian inference and reinforcement learning.</div>
+              <div class="preview-card-footer">
+                <span class="tag tag--planning">Inference</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://openreview.net/forum?id=RanDLuKUQT" class="preview-card" data-domain="neural" target="_blank">
+            <div class="preview-card-thumb">Image</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">Coherent Memory Structures in Neural Fields</div>
+              <div class="preview-card-meta">Justin Baker*, Yuer Tang*, Andrea Bertozzi · ICLR 2026 (Under Review)</div>
+              <div class="preview-card-desc" data-i18n="project.memory.desc">Explainable AI architectures using biologically inspired neural field representations and coherent structures.</div>
+              <div class="preview-card-footer">
+                <span class="tag tag--neural">Neural Dynamics</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI" class="preview-card" data-domain="neural" target="_blank">
+            <div class="preview-card-thumb">Image</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">Mori-Zwanzig Formalism for Neural Dynamics</div>
+              <div class="preview-card-meta">Yuer Tang, Justin Baker, Andrea Bertozzi · AAAI 2026 Workshop</div>
+              <div class="preview-card-desc" data-i18n="project.mz.desc">Operator-theoretic separation of neural dynamics into resolved and unresolved states with major MSE reduction.</div>
+              <div class="preview-card-footer">
+                <span class="tag tag--neural">Neural Dynamics</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="Projects/camera-pose-blog.html" class="preview-card" data-domain="vision">
+            <div class="preview-card-thumb">Image</div>
+            <div class="preview-card-body">
+              <div class="preview-card-title">LightCBAM-ResNet for Camera Pose Estimation</div>
+              <div class="preview-card-meta">Yuer Tang · UCLA MATH 156 · 2025</div>
+              <div class="preview-card-desc" data-i18n="project.camera.desc">Lightweight attention-enhanced backbone achieving 25% translation and 35% rotation error reduction.</div>
+              <div class="preview-card-footer">
+                <span class="tag tag--vision">Computer Vision</span>
+              </div>
+            </div>
+          </a>
+
         </div>
-        <p class="project-description">
-          Developed a lightweight attention-enhanced backbone for 6-DoF camera pose estimation. Integrated CBAM with ResNet50, achieving 25% reduction in translation error and 35% reduction in rotation error.
-        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="mailto:yuertang17@g.ucla.edu">Email</a>
+        <a href="https://github.com/YuerTang" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/yuer-tang/" target="_blank">LinkedIn</a>
       </div>
+      <p>&copy; 2026 Yuer Tang. <span data-i18n="footer.rights">All rights reserved.</span></p>
     </div>
+  </footer>
 
-    <div class="footer">
-      <p>Last updated: January 2026</p>
-    </div>
-
-  </div>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/animations.js" defer></script>
 </body>
 </html>

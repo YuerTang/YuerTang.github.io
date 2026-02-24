@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Online Bayesian Goal Inference — Yuer Tang, UCLA Tao Gao Lab">
+  <meta name="author" content="Yuer Tang">
+
+  <link rel="canonical" href="https://yuertang.dev/Projects/goal-inference.html">
+  <meta property="og:title" content="Online Bayesian Goal Inference">
+  <meta property="og:description" content="Modeling and inferring agent goals using Bayesian inference and reinforcement learning.">
+  <meta property="og:type" content="article">
+
+  <title>Goal Inference — Yuer Tang</title>
+
+  <link rel="stylesheet" href="../stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Online Bayesian Goal Inference",
+    "url": "https://yuertang.dev/Projects/goal-inference.html",
+    "description": "Modeling and inferring agent goals using Bayesian inference and reinforcement learning.",
+    "author": [
+      { "@type": "Person", "name": "Yuer Tang", "url": "https://yuertang.dev/" },
+      { "@type": "Person", "name": "Tao Gao" }
+    ],
+    "sourceOrganization": { "@type": "Organization", "name": "UCLA" },
+    "datePublished": "2024",
+    "about": ["Bayesian Inference", "Goal Inference", "Reinforcement Learning"]
+  }
+  </script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">Yuer Tang</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="../index.html" class="nav-link" data-i18n="nav.research">Research</a>
+        <a href="../publications.html" class="nav-link" data-i18n="nav.publications">Publications</a>
+        <a href="../blog.html" class="nav-link" data-i18n="nav.insights">Insights</a>
+        <a href="../cv.pdf" class="nav-link" target="_blank">CV</a>
+        <div class="lang-switcher">
+          <button class="lang-btn" aria-label="Change language">EN</button>
+          <div class="lang-dropdown">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="es">Español</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="de">Deutsch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Project Hero -->
+      <section class="project-page-hero reveal">
+        <h1 class="project-page-title">Online Bayesian Goal Inference</h1>
+        <p class="project-page-authors">
+          <a href="../index.html">Yuer Tang</a>,
+          <a href="https://www.psych.ucla.edu/faculty-page/taogao/" target="_blank">Tao Gao</a>
+        </p>
+        <span class="project-page-venue">UCLA · Tao Gao Lab · 2023–2024</span>
+        <div class="project-page-actions">
+          <a href="../Projects/Online_Goal_Inference_Modeling/" class="project-page-btn project-page-btn--primary"><i class="fas fa-play"></i> Live Demo</a>
+          <span class="project-page-btn project-page-btn--disabled"><i class="fas fa-file-alt"></i> Paper (coming soon)</span>
+        </div>
+      </section>
+
+      <!-- Abstract -->
+      <section class="project-page-section reveal">
+        <h2>Abstract</h2>
+        <p>
+          We model and infer agent goals within grid-based environments using Bayesian inference and
+          reinforcement learning. This project explores how observers can predict goals from observed
+          actions using structured probabilistic reasoning. We develop a real-time online visualization
+          system that demonstrates goal inference as agents navigate toward unknown targets.
+        </p>
+      </section>
+
+      <!-- Key Figure -->
+      <div class="figure-full reveal--scale">
+        <div class="figure-placeholder" style="min-height: 360px;">
+          System overview figure — coming soon
+        </div>
+        <p class="figure-caption">Figure 1: Overview of the Online Bayesian Goal Inference system. An agent navigates a grid world while a Bayesian observer updates goal posteriors in real time.</p>
+      </div>
+
+      <!-- Method -->
+      <section class="project-page-section reveal">
+        <h2>Method</h2>
+        <p>
+          The system consists of three main components:
+        </p>
+        <ul>
+          <li><strong>MDP Solver:</strong> Uses Value Iteration with Bellman updates to pre-compute optimal value functions for multiple hypothetical goals across the grid environment.</li>
+          <li><strong>Policy Extractor:</strong> Implements a gamma-discounted softmax policy with a temperature parameter for controlled action stochasticity, allowing the model to account for sub-optimal agent behavior.</li>
+          <li><strong>Bayesian Inference Engine:</strong> Performs real-time posterior updates over possible goals based on observed agent actions, using the extracted policies as likelihood functions.</li>
+        </ul>
+      </section>
+
+      <!-- Architecture -->
+      <div class="figure-full reveal--scale">
+        <div class="figure-placeholder" style="min-height: 300px;">
+          Architecture diagram — coming soon
+        </div>
+        <p class="figure-caption">Figure 2: System architecture showing the MDP solver, policy extractor, and Bayesian inference pipeline.</p>
+      </div>
+
+      <!-- Results -->
+      <section class="project-page-section reveal">
+        <h2>Results</h2>
+        <p>
+          Key achievements of this project include:
+        </p>
+        <ul>
+          <li>Foundational MDP solver using Value Iteration and Bellman updates for pre-computing optimal value functions across multiple hypothetical goals</li>
+          <li>Gamma-discounted softmax policy extractor with temperature parameter for controlled action stochasticity</li>
+          <li>Robust Bayesian goal inference mechanism for real-time posterior updates based on observed actions</li>
+          <li>Full-stack, low-latency online visualization system using Python (RL backend) and Node.js/Socket.io (frontend) for real-time demonstration</li>
+        </ul>
+      </section>
+
+      <!-- Interactive Demo -->
+      <section class="project-page-section reveal">
+        <h2>Interactive Demo</h2>
+        <p>
+          The full-stack visualization system demonstrates real-time goal inference as agents navigate grid environments.
+          The backend runs reinforcement learning computations in Python, while the frontend provides an interactive
+          visualization via Node.js and Socket.io.
+        </p>
+        <div style="text-align: center; margin-top: var(--spacing-lg);">
+          <a href="../Projects/Online_Goal_Inference_Modeling/" class="project-page-btn project-page-btn--primary">
+            <i class="fas fa-play"></i> Launch Demo
+          </a>
+        </div>
+      </section>
+
+      <!-- Citation -->
+      <section class="project-page-section reveal">
+        <h2>Citation</h2>
+        <div class="citation-block">
+          <button class="citation-copy">Copy</button>
+          <pre>@article{tang2024goalinference,
+  title     = {Online Bayesian Goal Inference in Grid Environments},
+  author    = {Tang, Yuer and Gao, Tao},
+  year      = {2024},
+  institution = {UCLA}
+}</pre>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="mailto:yuertang17@g.ucla.edu">Email</a>
+        <a href="https://github.com/YuerTang" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/yuer-tang/" target="_blank">LinkedIn</a>
+      </div>
+      <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/i18n.js" defer></script>
+  <script src="../js/animations.js" defer></script>
+</body>
+</html>
