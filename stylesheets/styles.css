@@ -29,8 +29,8 @@
   --spacing-3xl: 6rem;
 
   /* Layout */
-  --max-width: 1200px;
-  --content-width: 800px;
+  --max-width: 1600px;
+  --content-width: 900px;
   --nav-height: 48px;
 
   /* Transitions */
@@ -292,7 +292,7 @@ a:hover {
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-2xl);
 }
 
 /* Page Header */
@@ -313,31 +313,50 @@ a:hover {
 }
 
 /* ==========================================================================
-   Hero Section
+   Hero Section — two-column: photo left, bio right
    ========================================================================== */
 .hero {
-  text-align: center;
+  display: flex;
+  gap: var(--spacing-2xl);
+  align-items: flex-start;
   padding: var(--spacing-xl) 0 var(--spacing-2xl);
 }
 
+.hero-left {
+  flex-shrink: 0;
+  text-align: center;
+}
+
 .hero-photo {
-  width: 200px;
-  height: 200px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
+.hero-links {
+  display: flex;
+  gap: var(--spacing-xs);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-right {
+  flex: 1;
+  min-width: 0;
+}
+
 .hero-name {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   margin-bottom: var(--spacing-xs);
 }
 
 .hero-tagline {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   color: var(--color-text-secondary);
   font-style: italic;
   margin-bottom: var(--spacing-md);
@@ -347,15 +366,7 @@ a:hover {
   font-size: 1.0625rem;
   color: var(--color-text-secondary);
   line-height: 1.7;
-  max-width: 640px;
-  margin: 0 auto var(--spacing-lg);
-}
-
-.hero-links {
-  display: flex;
-  gap: var(--spacing-sm);
-  justify-content: center;
-  flex-wrap: wrap;
+  margin-bottom: var(--spacing-lg);
 }
 
 .hero-link {
@@ -1296,6 +1307,16 @@ a:hover {
     font-size: 1.5rem;
   }
 
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-right {
+    text-align: center;
+  }
+
   .hero-name {
     font-size: 2.25rem;
   }
@@ -1341,7 +1362,7 @@ a:hover {
 
 @media (max-width: 480px) {
   .container {
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-sm);
   }
 
   .project-card {
