@@ -12,7 +12,7 @@
       'nav.publications': 'Publications',
       'nav.insights': 'Insights',
       'hero.tagline': '"It started with a simple question: what is the model inside our minds?"',
-      'hero.bio': 'Hi, I\'m a senior at UCLA studying Data Theory with a minor in Data Science Engineering. I\'m fortunate to receive mentorship from <a href="http://www.stat.ucla.edu/~ywu/">Prof. Yingnian Wu</a>, <a href="https://sites.google.com/view/justin-baker/home">Prof. Justin Baker</a>, and <a href="https://jiayuanm.com/">Prof. Jiayuan Mao</a>. <strong>I\'m actively seeking research positions (June 2026 to August 2027), 2027 PhD programs, and startup opportunities.</strong>',
+      'hero.bio': 'Hi, I\'m a senior at UCLA studying Data Theory with a minor in Data Science Engineering. I\'m fortunate to receive mentorship from <a href="http://www.stat.ucla.edu/~ywu/">Prof. Yingnian Wu</a>, <a href="https://sites.google.com/view/justin-baker/home">Prof. Justin Baker</a>, and <a href="https://jiayuanm.com/">Prof. Jiayuan Mao</a>.',
       'section.news': 'News',
       'section.research': 'Research',
       'section.research.subtitle': 'Building robotic agents that learn and plan in ways that support people.',
