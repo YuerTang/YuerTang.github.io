@@ -76,6 +76,25 @@
     });
   }
 
+  /* --- Tabs --- */
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var tabPanels = document.querySelectorAll('.tab-panel');
+
+  if (tabBtns.length > 0) {
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tab = btn.getAttribute('data-tab');
+
+        tabBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        tabPanels.forEach(function (panel) {
+          panel.classList.toggle('active', panel.id === 'tab-' + tab);
+        });
+      });
+    });
+  }
+
   /* --- Copy Citation --- */
   document.querySelectorAll('.citation-copy').forEach(function (btn) {
     btn.addEventListener('click', function () {

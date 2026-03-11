@@ -126,122 +126,82 @@
         </div>
       </section>
 
-      <!-- News Section -->
-      <section class="section reveal">
-        <div class="section-header">
-          <h2 class="section-title" data-i18n="section.news">News</h2>
-        </div>
-        <ul class="news-list stagger-children">
-          <li class="news-item">
-            <span class="news-date">Jan 2026</span>
-            <p class="news-text" data-i18n="news.1">Paper accepted to the <a href="https://neuroai-multimodal-workshop.github.io/">AAAI 2026 NeuroAI Workshop</a>. See you in Singapore!</p>
-          </li>
-          <li class="news-item">
-            <span class="news-date">Jan 2026</span>
-            <p class="news-text" data-i18n="news.2">Presented <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043">"When Linear Models Aren't Enough"</a> at the Joint Mathematics Meeting in Washington D.C.</p>
-          </li>
-          <li class="news-item">
-            <span class="news-date">Sep 2025</span>
-            <p class="news-text" data-i18n="news.3">Submitted work on <a href="https://iclr.cc/Conferences/2025">coherent memory structures in neural fields</a> to ICLR 2026.</p>
-          </li>
-          <li class="news-item">
-            <span class="news-date">May 2025</span>
-            <p class="news-text" data-i18n="news.4">Started working with <a href="https://jiayuanm.com/">Jiayuan Mao</a> at MIT CSAIL. My first time working on robotics!</p>
-          </li>
-        </ul>
-      </section>
-
-      <!-- Research Section -->
-      <section id="research" class="section">
-        <div class="section-header reveal">
-          <h2 class="section-title" data-i18n="section.research">Research</h2>
-          <p class="section-subtitle" data-i18n="section.research.subtitle">Representations for embodied agents that perceive, reason, plan, and act.</p>
+      <!-- Tabbed Section -->
+      <section class="section">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="news">News</button>
+          <button class="tab-btn" data-tab="research">Research</button>
+          <button class="tab-btn" data-tab="publications">Publications</button>
         </div>
 
-        <!-- Filter Bar -->
-        <div class="filter-bar reveal">
-          <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
-          <button class="filter-btn" data-filter="robotics" data-i18n="filter.robotics">Robotics</button>
-          <button class="filter-btn" data-filter="planning" data-i18n="filter.planning">Planning &amp; Inference</button>
-          <button class="filter-btn" data-filter="neural" data-i18n="filter.neural">Neural Dynamics</button>
-          <button class="filter-btn" data-filter="vision" data-i18n="filter.vision">Computer Vision</button>
+        <!-- News Tab -->
+        <div class="tab-panel active" id="tab-news">
+          <ul class="news-list">
+            <li class="news-item">
+              <span class="news-date">Jan 2026</span>
+              <p class="news-text">Paper accepted to the <a href="https://neuroai-multimodal-workshop.github.io/">AAAI 2026 NeuroAI Workshop</a>. See you in Singapore!</p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">Jan 2026</span>
+              <p class="news-text">Presented <a href="https://meetings.ams.org/math/jmm2026/meetingapp.cgi/Paper/59043">"When Linear Models Aren't Enough"</a> at the Joint Mathematics Meeting in Washington D.C.</p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">Sep 2025</span>
+              <p class="news-text">Submitted work on <a href="https://iclr.cc/Conferences/2025">coherent memory structures in neural fields</a> to ICLR 2026.</p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">May 2025</span>
+              <p class="news-text">Started working with <a href="https://jiayuanm.com/">Jiayuan Mao</a> at MIT CSAIL. My first time working on robotics!</p>
+            </li>
+          </ul>
         </div>
 
-        <!-- Flat Project List (horizontal cards) -->
-        <div class="preview-list stagger-children">
+        <!-- Research Tab -->
+        <div class="tab-panel" id="tab-research">
+          <ul class="news-list">
+            <li class="news-item">
+              <span class="news-date">2025</span>
+              <p class="news-text"><a href="Projects/scale-control.html">Disentangled Scale Control for Robotic Policies</a><br><span class="news-meta">Yuer Tang, Jiayuan Mao · MIT CSAIL</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2025</span>
+              <p class="news-text"><a href="https://arxiv.org/abs/2410.11359" target="_blank">Meta-Adaptive Latent Planning (MALP)</a><br><span class="news-meta">Yuer Tang, Yingnian Wu · UCLA</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2025</span>
+              <p class="news-text"><a href="https://openreview.net/forum?id=RanDLuKUQT" target="_blank">Coherent Memory Structures in Neural Fields</a><br><span class="news-meta">Justin Baker*, Yuer Tang*, Andrea Bertozzi · ICLR 2026 (Under Review)</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2025</span>
+              <p class="news-text"><a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI" target="_blank">Mori-Zwanzig Formalism for Neural Dynamics</a><br><span class="news-meta">Yuer Tang, Justin Baker, Andrea Bertozzi · AAAI 2026 Workshop</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2024</span>
+              <p class="news-text"><a href="Projects/goal-inference.html">Online Bayesian Goal Inference</a><br><span class="news-meta">Yuer Tang, Tao Gao · UCLA</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2025</span>
+              <p class="news-text"><a href="Projects/camera-pose-blog.html">LightCBAM-ResNet for Camera Pose Estimation</a><br><span class="news-meta">Yuer Tang · UCLA MATH 156</span></p>
+            </li>
+          </ul>
+        </div>
 
-          <a href="Projects/scale-control.html" class="preview-card" data-domain="robotics">
-            <div class="preview-card-thumb">Image</div>
-            <div class="preview-card-body">
-              <div class="preview-card-title">Disentangled Scale Control for Robotic Policies</div>
-              <div class="preview-card-meta">Yuer Tang, Jiayuan Mao · MIT CSAIL · 2025</div>
-              <div class="preview-card-desc" data-i18n="project.scale.desc">Compact, interpretable latent representations for fine-grained robotic manipulation with continuous scale control.</div>
-              <div class="preview-card-footer">
-                <span class="tag tag--robotics">Robotics</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://arxiv.org/abs/2410.11359" class="preview-card" data-domain="planning" target="_blank">
-            <div class="preview-card-thumb">Image</div>
-            <div class="preview-card-body">
-              <div class="preview-card-title">Meta-Adaptive Latent Planning (MALP)</div>
-              <div class="preview-card-meta">Yuer Tang, Yingnian Wu · UCLA · 2025</div>
-              <div class="preview-card-desc" data-i18n="project.malp.desc">Integrating MAML with Latent Plan Transformers for multi-task manipulation with rapid adaptation.</div>
-              <div class="preview-card-footer">
-                <span class="tag tag--planning">Planning</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="Projects/goal-inference.html" class="preview-card" data-domain="planning">
-            <div class="preview-card-thumb">Image</div>
-            <div class="preview-card-body">
-              <div class="preview-card-title">Online Bayesian Goal Inference</div>
-              <div class="preview-card-meta">Yuer Tang, Tao Gao · UCLA · 2023–2024</div>
-              <div class="preview-card-desc" data-i18n="project.goal.desc">Modeling and inferring agent goals in grid environments using Bayesian inference and reinforcement learning.</div>
-              <div class="preview-card-footer">
-                <span class="tag tag--planning">Inference</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://openreview.net/forum?id=RanDLuKUQT" class="preview-card" data-domain="neural" target="_blank">
-            <div class="preview-card-thumb">Image</div>
-            <div class="preview-card-body">
-              <div class="preview-card-title">Coherent Memory Structures in Neural Fields</div>
-              <div class="preview-card-meta">Justin Baker*, Yuer Tang*, Andrea Bertozzi · ICLR 2026 (Under Review)</div>
-              <div class="preview-card-desc" data-i18n="project.memory.desc">Explainable AI architectures using biologically inspired neural field representations and coherent structures.</div>
-              <div class="preview-card-footer">
-                <span class="tag tag--neural">Neural Dynamics</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://openreview.net/group?id=AAAI.org/2026/Workshop/NeuroAI" class="preview-card" data-domain="neural" target="_blank">
-            <div class="preview-card-thumb">Image</div>
-            <div class="preview-card-body">
-              <div class="preview-card-title">Mori-Zwanzig Formalism for Neural Dynamics</div>
-              <div class="preview-card-meta">Yuer Tang, Justin Baker, Andrea Bertozzi · AAAI 2026 Workshop</div>
-              <div class="preview-card-desc" data-i18n="project.mz.desc">Operator-theoretic separation of neural dynamics into resolved and unresolved states with major MSE reduction.</div>
-              <div class="preview-card-footer">
-                <span class="tag tag--neural">Neural Dynamics</span>
-              </div>
-            </div>
-          </a>
-
-          <a href="Projects/camera-pose-blog.html" class="preview-card" data-domain="vision">
-            <div class="preview-card-thumb">Image</div>
-            <div class="preview-card-body">
-              <div class="preview-card-title">LightCBAM-ResNet for Camera Pose Estimation</div>
-              <div class="preview-card-meta">Yuer Tang · UCLA MATH 156 · 2025</div>
-              <div class="preview-card-desc" data-i18n="project.camera.desc">Lightweight attention-enhanced backbone achieving 25% translation and 35% rotation error reduction.</div>
-              <div class="preview-card-footer">
-                <span class="tag tag--vision">Computer Vision</span>
-              </div>
-            </div>
-          </a>
-
+        <!-- Publications Tab -->
+        <div class="tab-panel" id="tab-publications">
+          <ul class="news-list">
+            <li class="news-item">
+              <span class="news-date">2026</span>
+              <p class="news-text"><strong>Mori-Zwanzig Formalism for Neural Dynamics</strong><br><span class="news-meta">Yuer Tang, Justin Baker, Andrea Bertozzi · AAAI 2026 NeuroAI Workshop</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2026</span>
+              <p class="news-text"><strong>Coherent Memory Structures in Neural Fields</strong><br><span class="news-meta">Justin Baker*, Yuer Tang*, Andrea Bertozzi · ICLR 2026 (Under Review)</span></p>
+            </li>
+            <li class="news-item">
+              <span class="news-date">2025</span>
+              <p class="news-text"><strong>Meta-Adaptive Latent Planning for Multi-Task Robotic Manipulation</strong><br><span class="news-meta">Yuer Tang, Yingnian Wu · <a href="https://arxiv.org/abs/2410.11359" target="_blank">arXiv</a></span></p>
+            </li>
+          </ul>
         </div>
       </section>
 
