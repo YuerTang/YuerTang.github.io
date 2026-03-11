@@ -511,6 +511,95 @@ a:hover {
   display: none;
 }
 
+/* Publication cards (Jason Lee style) */
+.pub-card {
+  display: flex;
+  gap: var(--spacing-lg);
+  align-items: flex-start;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.pub-card:last-child {
+  border-bottom: none;
+}
+
+.pub-card.hidden {
+  display: none;
+}
+
+.pub-thumb {
+  flex-shrink: 0;
+  width: 180px;
+  height: 120px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-bg-secondary);
+}
+
+.pub-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pub-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pub-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 4px;
+}
+
+.pub-authors {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 2px;
+}
+
+.pub-authors a {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 2px;
+}
+
+.pub-authors a:hover {
+  color: var(--color-accent);
+}
+
+.pub-venue {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 0 0 var(--spacing-xs);
+}
+
+.pub-links {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.pub-links a {
+  font-size: 0.875rem;
+  color: var(--color-accent);
+}
+
+.pub-links a:hover {
+  text-decoration: underline;
+}
+
+.pub-link-disabled {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
 /* ==========================================================================
    Filter Bar
    ========================================================================== */
@@ -1392,7 +1481,8 @@ a:hover {
   }
 
   .news-item,
-  .list-item {
+  .list-item,
+  .pub-card {
     flex-direction: column;
     gap: var(--spacing-xs);
   }

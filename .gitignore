@@ -1,4 +1,6 @@
 .claude/
 resources/
+!resources/CV/
+!resources/CV/*.pdf
 .DS_Store
 Screenshot*

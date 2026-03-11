@@ -35,7 +35,7 @@
 
   /* --- Filter Buttons (Andy Zeng style) --- */
   var filterBtns = document.querySelectorAll('.filter-btn');
-  var listItems = document.querySelectorAll('.list-item');
+  var listItems = document.querySelectorAll('.list-item, .pub-card');
 
   function applyFilter(filter) {
     listItems.forEach(function (item) {
