@@ -530,8 +530,8 @@ a:hover {
 
 .pub-thumb {
   flex-shrink: 0;
-  width: 180px;
-  height: 120px;
+  width: 280px;
+  height: 180px;
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--color-bg-secondary);
