@@ -285,7 +285,7 @@ a:hover {
    Main Content
    ========================================================================== */
 .main {
-  padding-top: calc(var(--nav-height) + var(--spacing-3xl));
+  padding-top: calc(var(--nav-height) + var(--spacing-lg));
   padding-bottom: var(--spacing-3xl);
 }
 
