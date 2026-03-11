@@ -33,27 +33,35 @@
     });
   }
 
-  /* --- Domain Filter --- */
+  /* --- Filter Buttons (Andy Zeng style) --- */
   var filterBtns = document.querySelectorAll('.filter-btn');
-  var cards = document.querySelectorAll('.preview-card[data-domain]');
+  var listItems = document.querySelectorAll('.list-item');
 
-  if (filterBtns.length > 0 && cards.length > 0) {
+  function applyFilter(filter) {
+    listItems.forEach(function (item) {
+      if (item.classList.contains(filter)) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    });
+  }
+
+  if (filterBtns.length > 0 && listItems.length > 0) {
+    // Apply default filter on load
+    var activeBtn = document.querySelector('.filter-btn.active');
+    if (activeBtn) {
+      applyFilter(activeBtn.getAttribute('data-filter'));
+    }
+
     filterBtns.forEach(function (btn) {
       btn.addEventListener('click', function () {
         var filter = btn.getAttribute('data-filter');
 
-        // Update active button
         filterBtns.forEach(function (b) { b.classList.remove('active'); });
         btn.classList.add('active');
 
-        // Show/hide cards
-        cards.forEach(function (card) {
-          if (filter === 'all' || card.getAttribute('data-domain') === filter) {
-            card.classList.remove('hidden');
-          } else {
-            card.classList.add('hidden');
-          }
-        });
+        applyFilter(filter);
       });
     });
   }
@@ -76,24 +84,6 @@
     });
   }
 
-  /* --- Tabs --- */
-  var tabBtns = document.querySelectorAll('.tab-btn');
-  var tabPanels = document.querySelectorAll('.tab-panel');
-
-  if (tabBtns.length > 0) {
-    tabBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var tab = btn.getAttribute('data-tab');
-
-        tabBtns.forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-
-        tabPanels.forEach(function (panel) {
-          panel.classList.toggle('active', panel.id === 'tab-' + tab);
-        });
-      });
-    });
-  }
 
   /* --- Copy Citation --- */
   document.querySelectorAll('.citation-copy').forEach(function (btn) {
