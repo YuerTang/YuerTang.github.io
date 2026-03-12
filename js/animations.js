@@ -82,6 +82,16 @@
         navLinks.classList.remove('open');
       });
     });
+
+    // Close mobile nav when clicking outside
+    document.addEventListener('click', function (e) {
+      if (navLinks.classList.contains('open') &&
+          !navLinks.contains(e.target) &&
+          !toggle.contains(e.target)) {
+        toggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      }
+    });
   }
 
 
