@@ -166,40 +166,42 @@
         <section class="reveal">
           <h2>Training Procedure</h2>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Backbone</th>
-                <th>CBAM</th>
-                <th>Loss</th>
-                <th>Epochs</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>VGG16-PoseNet</td>
-                <td>VGG16</td>
-                <td>No</td>
-                <td>Static-β</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>ResNet50-PoseNet</td>
-                <td>ResNet50</td>
-                <td>No</td>
-                <td>Static-β</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>ResNet50+CBAM (ours)</td>
-                <td>ResNet50</td>
-                <td>Yes</td>
-                <td>Learnable-β</td>
-                <td>50</td>
-              </tr>
-            </tbody>
-          </table>
+          <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Model</th>
+                  <th>Backbone</th>
+                  <th>CBAM</th>
+                  <th>Loss</th>
+                  <th>Epochs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>VGG16-PoseNet</td>
+                  <td>VGG16</td>
+                  <td>No</td>
+                  <td>Static-β</td>
+                  <td>50</td>
+                </tr>
+                <tr>
+                  <td>ResNet50-PoseNet</td>
+                  <td>ResNet50</td>
+                  <td>No</td>
+                  <td>Static-β</td>
+                  <td>50</td>
+                </tr>
+                <tr>
+                  <td>ResNet50+CBAM (ours)</td>
+                  <td>ResNet50</td>
+                  <td>Yes</td>
+                  <td>Learnable-β</td>
+                  <td>50</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <h3>Implementation Details</h3>
           <ul>
