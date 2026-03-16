@@ -1,1 +1,1 @@
-GitHub Website: https://yuertang.github.io/
+GitHub Website: yuertang.dev
