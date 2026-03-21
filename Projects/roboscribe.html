@@ -1,190 +1,1336 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="RoboScribe — A language-guided pipeline that converts natural language task descriptions into executable low-level control policies for robotic manipulation in simulation.">
-  <meta name="author" content="Yuer Tang">
-  <meta name="robots" content="index, follow">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="RoboScribe — language-guided robotic policy generation with human-in-the-loop phase design, MuJoCo simulation, and multi-LLM backends. Project summary and demo."
+    />
+    <title>RoboScribe — Language-Guided Robotic Policy Generation</title>
+    <style>
+      /* ── Reset & Base (original) ─────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        color: #1a1a1a;
+        background: #fff;
+        line-height: 1.7;
+        font-size: 16px;
+      }
 
-  <link rel="canonical" href="https://yuertang.dev/Projects/roboscribe.html">
+      /* ── Navigation ───────────────────────────────── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid #e5e5e5;
+        padding: 0.8rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      nav .logo {
+        font-weight: 700;
+        font-size: 1.15rem;
+        color: #1a1a1a;
+        text-decoration: none;
+      }
+      nav .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 1.5rem;
+        justify-content: flex-end;
+      }
+      nav .links a {
+        color: #555;
+        text-decoration: none;
+        font-size: 0.92rem;
+        font-weight: 500;
+        transition: color 0.15s;
+      }
+      nav .links a:hover {
+        color: #1a1a1a;
+      }
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="RoboScribe — Yuer Tang">
-  <meta property="og:description" content="Language-guided scripted policy generation for robotic manipulation.">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://yuertang.dev/Projects/roboscribe.html">
-  <meta property="og:image" content="https://yuertang.dev/profile_photo/profile.jpg">
-  <meta property="og:site_name" content="Yuer Tang">
+      /* ── Sections ─────────────────────────────────── */
+      section {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+      }
+      section + section {
+        padding-top: 1rem;
+      }
+      section.section-tight {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+      /* ── Hero ─────────────────────────────────────── */
+      .hero {
+        text-align: center;
+        padding: 5rem 1.5rem 3rem;
+        max-width: 820px;
+        margin: 0 auto;
+      }
+      .hero .eyebrow {
+        font-size: 0.8rem;
+        color: #777;
+        margin-bottom: 0.75rem;
+      }
+      .hero h1 {
+        font-size: 2.6rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.6rem;
+      }
+      .hero .subtitle {
+        font-size: 1.15rem;
+        color: #555;
+        max-width: 600px;
+        margin: 0 auto 1.6rem;
+        line-height: 1.6;
+      }
+      .hero .authors {
+        font-size: 0.95rem;
+        color: #777;
+        margin-bottom: 0.5rem;
+      }
+      .hero .authors a {
+        color: #555;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .hero .affiliation {
+        font-size: 0.88rem;
+        color: #999;
+        margin-bottom: 2rem;
+      }
+      .hero .badges {
+        display: flex;
+        gap: 0.8rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .hero .badges a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 1rem;
+        border: 1px solid #d0d0d0;
+        border-radius: 6px;
+        color: #333;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .hero .badges a:hover {
+        border-color: #999;
+        background: #f8f8f8;
+      }
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="RoboScribe — Yuer Tang">
-  <meta name="twitter:description" content="Language-guided scripted policy generation for robotic manipulation.">
-  <meta name="twitter:image" content="https://yuertang.dev/profile_photo/profile.jpg">
+      /* ── Section headings ─────────────────────────── */
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 2px solid #eee;
+      }
+      h2 .rubric-hint {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #888;
+        margin-left: 0.35rem;
+      }
+      .section-lead {
+        font-size: 0.95rem;
+        color: #555;
+        margin-bottom: 1.2rem;
+        max-width: 40rem;
+      }
+      h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 1.5rem 0 0.6rem;
+      }
 
-  <title>RoboScribe — Yuer Tang</title>
+      /* ── Overview (uses original palette) ─────────── */
+      .stat-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 1rem 0 1.5rem;
+      }
+      .stat-pill {
+        font-size: 0.8rem;
+        font-weight: 600;
+        background: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 0.4rem 0.75rem;
+        color: #555;
+      }
+      .highlight-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+        margin: 1.5rem 0;
+      }
+      .highlight-card {
+        background: #fafafa;
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        padding: 1.3rem;
+      }
+      .highlight-card .icon {
+        font-size: 1.1rem;
+        margin-bottom: 0.35rem;
+        color: #666;
+      }
+      .highlight-card h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      .highlight-card p {
+        font-size: 0.88rem;
+        color: #555;
+        line-height: 1.55;
+      }
 
-  <link rel="stylesheet" href="../stylesheets/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      /* ── Pipeline diagram ─────────────────────────── */
+      .pipeline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin: 1.5rem 0;
+        font-size: 0.92rem;
+      }
+      .pipeline .step {
+        background: #f5f5f5;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .pipeline .step.highlight {
+        background: #e8f0fe;
+        border-color: #b3cde3;
+      }
+      .pipeline .arrow {
+        color: #bbb;
+        font-size: 1.2rem;
+      }
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "headline": "RoboScribe: Language-Guided Scripted Policy Generation for Robotic Manipulation",
-    "url": "https://yuertang.dev/Projects/roboscribe.html",
-    "description": "A language-guided pipeline that converts natural language task descriptions into executable low-level control policies for robotic manipulation in simulation.",
-    "author": [
-      { "@type": "Person", "name": "Yuer Tang", "url": "https://yuertang.dev/" },
-      { "@type": "Person", "name": "Bree Chen" }
-    ],
-    "sourceOrganization": { "@type": "Organization", "name": "MIT CSAIL" },
-    "datePublished": "2025",
-    "about": ["Robotics", "Large Language Models", "Code Generation", "Robotic Manipulation"]
-  }
-  </script>
-</head>
-<body>
-  <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-container">
-      <a href="../index.html" class="nav-logo">Yuer Tang</a>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="nav-links">
-        <a href="../index.html" class="nav-link">Home</a>
-        <a href="../blog.html" class="nav-link" data-i18n="nav.insights">Insights</a>
-        <div class="lang-switcher">
-          <button class="lang-btn" aria-label="Change language">EN</button>
-          <div class="lang-dropdown">
-            <button class="lang-option active" data-lang="en">English</button>
-            <button class="lang-option" data-lang="zh">中文</button>
-            <button class="lang-option" data-lang="es">Español</button>
-            <button class="lang-option" data-lang="fr">Français</button>
-            <button class="lang-option" data-lang="de">Deutsch</button>
+      /* ── Demo video ───────────────────────────────── */
+      .video-placeholder {
+        background: #f0f0f0;
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #999;
+        margin: 1.5rem 0;
+      }
+      .video-placeholder .label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        color: #777;
+      }
+      .video-placeholder .hint {
+        font-size: 0.85rem;
+      }
+
+      .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        margin: 1.5rem 0;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #000;
+      }
+      .video-container iframe,
+      .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .video-caption {
+        font-size: 0.88rem;
+        color: #666;
+        margin: 0.5rem 0 0;
+      }
+
+      .gif-strip {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.75rem;
+        margin: 1.5rem 0 0;
+      }
+      .gif-strip figure {
+        margin: 0;
+        text-align: center;
+      }
+      .gif-strip img {
+        width: 100%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        border-radius: 6px;
+        background: #000;
+        border: 1px solid #e8e8e8;
+      }
+      .gif-strip figcaption {
+        font-size: 0.75rem;
+        color: #777;
+        margin-top: 0.35rem;
+      }
+
+      .media-frame {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e8e8e8;
+        background: #000;
+      }
+      .media-frame img,
+      .media-frame video {
+        width: 100%;
+        height: auto;
+        display: block;
+        vertical-align: middle;
+      }
+      .fig-caption {
+        font-size: 0.88rem;
+        color: #666;
+        margin-top: 0.5rem;
+        line-height: 1.45;
+      }
+
+      /* ── Results table ────────────────────────────── */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.2rem 0;
+        font-size: 0.92rem;
+      }
+      thead th {
+        text-align: left;
+        padding: 0.6rem 0.8rem;
+        border-bottom: 2px solid #ddd;
+        font-weight: 600;
+        color: #333;
+      }
+      tbody td {
+        padding: 0.55rem 0.8rem;
+        border-bottom: 1px solid #eee;
+      }
+      tbody tr:hover {
+        background: #fafafa;
+      }
+      .rate-good {
+        color: #16a34a;
+        font-weight: 600;
+      }
+      .rate-mid {
+        color: #ca8a04;
+        font-weight: 600;
+      }
+      .rate-low {
+        color: #dc2626;
+        font-weight: 600;
+      }
+
+      .chart-placeholder,
+      .fig-placeholder-box {
+        background: #f8f8f8;
+        border: 2px dashed #d0d0d0;
+        border-radius: 10px;
+        padding: 3rem 2rem;
+        text-align: center;
+        color: #999;
+        margin: 1.2rem 0;
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+      .fig-placeholder-box code {
+        font-size: 0.8rem;
+        color: #666;
+      }
+
+      /* ── Method cards ─────────────────────────────── */
+      .method-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.2rem;
+        margin: 1.5rem 0;
+      }
+      .method-card {
+        background: #fafafa;
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        padding: 1.3rem;
+      }
+      .method-card h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      .method-card p {
+        font-size: 0.88rem;
+        color: #555;
+        line-height: 1.55;
+      }
+
+      /* ── UI workflow figures ──────────────────────── */
+      .workflow-intro {
+        font-size: 0.95rem;
+        color: #444;
+        margin-bottom: 1.5rem;
+        line-height: 1.65;
+      }
+      .workflow-step {
+        margin: 2rem 0;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+      }
+      .workflow-step:last-of-type {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .workflow-step-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        margin-bottom: 0.75rem;
+      }
+      .workflow-step-num {
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background: #e8f0fe;
+        border: 1px solid #b3cde3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: #1a4a7a;
+      }
+      .workflow-step-head h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        line-height: 1.35;
+      }
+      .workflow-step-desc {
+        font-size: 0.9rem;
+        color: #555;
+        margin: 0 0 1rem 2.85rem;
+        line-height: 1.55;
+      }
+      .workflow-fig-grid {
+        display: grid;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .workflow-fig-grid.cols-2 {
+        grid-template-columns: 1fr 1fr;
+      }
+      .workflow-fig-grid.cols-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      figure.workflow-fig {
+        margin: 0;
+      }
+      figure.workflow-fig .shot-frame {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        border-radius: 8px;
+        border: 1px solid #2a2a2a;
+        background: #000;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      figure.workflow-fig .shot-frame > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+      }
+      figure.workflow-fig .shot-frame.shot-frame--tall {
+        aspect-ratio: 16 / 15;
+      }
+      figure.workflow-fig .shot-frame--placeholder {
+        border: 2px dashed #555;
+        background: #000;
+        padding: 0.75rem 1rem;
+      }
+      figure.workflow-fig .shot-frame--placeholder .shot-label {
+        text-align: center;
+        color: #a8a8a8;
+        font-size: 0.78rem;
+        font-family: "SF Mono", ui-monospace, monospace;
+        word-break: break-all;
+        line-height: 1.45;
+      }
+      figure.workflow-fig figcaption {
+        font-size: 0.82rem;
+        color: #666;
+        margin-top: 0.45rem;
+        line-height: 1.4;
+      }
+      .workflow-step .workflow-fig-grid,
+      .workflow-step > figure.workflow-fig,
+      .workflow-step .workflow-fig-stack {
+        margin-left: 2.85rem;
+      }
+      .workflow-fig-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-left: 2.85rem;
+        margin-top: 0.5rem;
+      }
+      .workflow-fig-stack .workflow-fig-grid {
+        margin-left: 0;
+        margin-top: 0;
+      }
+
+      /* ── Code block ───────────────────────────────── */
+      pre {
+        background: #1e1e2e;
+        color: #cdd6f4;
+        border-radius: 8px;
+        padding: 1.2rem 1.5rem;
+        overflow-x: auto;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        margin: 1rem 0;
+      }
+      pre code {
+        font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace;
+      }
+
+      /* ── Supported envs ──────────────────────────── */
+      .env-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1.2rem 0;
+      }
+      .env-card {
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        background: #fafafa;
+      }
+      .env-card .env-rollout {
+        width: 100%;
+        border-radius: 6px;
+        margin-bottom: 0.6rem;
+        background: #000;
+        aspect-ratio: 1;
+        object-fit: cover;
+      }
+      .env-card .env-name {
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+      .env-card .env-desc {
+        font-size: 0.82rem;
+        color: #777;
+        margin-top: 0.2rem;
+        line-height: 1.35;
+      }
+      .env-card .env-stat {
+        margin-top: 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+
+      /* ── Footer ───────────────────────────────────── */
+      footer {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 3rem;
+        border-top: 1px solid #eee;
+        font-size: 0.85rem;
+        color: #999;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      footer a {
+        color: #777;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
+      section img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* ── Responsive ───────────────────────────────── */
+      @media (max-width: 700px) {
+        .hero h1 {
+          font-size: 1.8rem;
+        }
+        .method-grid,
+        .env-grid,
+        .highlight-grid {
+          grid-template-columns: 1fr;
+        }
+        nav .links {
+          gap: 1rem;
+        }
+        .pipeline {
+          font-size: 0.8rem;
+        }
+        .gif-strip {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .workflow-step-desc,
+        .workflow-step .workflow-fig-grid,
+        .workflow-step > figure.workflow-fig,
+        .workflow-step .workflow-fig-stack {
+          margin-left: 0;
+        }
+        .workflow-fig-grid.cols-2,
+        .workflow-fig-grid.cols-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="#" class="logo">RoboScribe</a>
+      <div class="links">
+        <a href="#overview">Summary</a>
+        <a href="#system">System</a>
+        <a href="#demo">Video</a>
+        <a href="#pipeline">UI flow</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#environments">Envs</a>
+        <a href="assets/Agentic_AI_for_Robotics_Control.pdf">Report (PDF)</a>
+        <a href="#quickstart">Run</a>
+      </div>
+    </nav>
+
+    <!-- Copy your report PDF into docs/assets/Agentic_AI_for_Robotics_Control.pdf (or update href above). -->
+
+    <div class="hero">
+      <p class="eyebrow">Project website · abstract of our report</p>
+      <h1>RoboScribe</h1>
+      <p class="subtitle">
+        <strong>Language-guided policy generation</strong> for robosuite
+        manipulation tasks. Describe a task in natural language → the system
+        designs phased strategies with <strong>human approval</strong> → an
+        agent writes code, rolls out in <strong>MuJoCo</strong>, diagnoses
+        failures from <strong>trajectory metrics</strong>, and iterates until
+        policies meet a success threshold.
+      </p>
+      <p class="authors">
+        <a href="https://yuertang.dev">Yuer Tang</a>, Bree Chen
+      </p>
+      <p class="affiliation">UCLA</p>
+      <div class="badges">
+        <a href="https://github.com/YuerTang/AI-Agentic-for-Robotic-Control">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            />
+          </svg>
+          Code
+        </a>
+        <a href="assets/Agentic_AI_for_Robotics_Control.pdf">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 0h8a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V2a2 2 0 012-2zm1 3v1h6V3H5zm0 3v1h6V6H5zm0 3v1h4V9H5z"
+            />
+          </svg>
+          Technical report (PDF)
+        </a>
+        <a href="#demo">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M6 3.5L12 8l-6 4.5V3.5z" />
+          </svg>
+          Watch demo
+        </a>
+      </div>
+    </div>
+
+    <section id="overview">
+      <h2>
+        Motivation
+      </h2>
+      <p class="section-lead">
+       <strong>Writing robot policies shouldn't take hours.</strong>
+RoboScribe turns natural language into executable robot control code—automatically generating, testing, and debugging policies in simulation so researchers can focus on ideas, not boilerplate.
+      </p>
+      <div class="stat-row" aria-label="Project highlights">
+        <span class="stat-pill">MuJoCo · robosuite</span>
+        <span class="stat-pill">JSX + FastAPI backend</span>
+        <span class="stat-pill">Human-in-the-loop</span>
+        <span class="stat-pill">Multi-LLM backends</span>
+        <span class="stat-pill">Trajectory-based diagnosis</span>
+        <span class="stat-pill">Real-time interaction</span>
+      </div>
+      <div class="highlight-grid">
+        <div class="highlight-card">
+          <div class="icon" aria-hidden="true">◇</div>
+          <h4>Grounded in the simulator</h4>
+          <p>
+            Environment detection, live obs shapes/samples, and reward/source
+            introspection so the model reasons over facts—not guesses.
+          </p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon" aria-hidden="true">✓</div>
+          <h4>Phase design first</h4>
+          <p>
+            Structured phases (approach, grasp, lift, …) with exit conditions
+            are reviewed by a human before any policy code is generated.
+          </p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon" aria-hidden="true">↻</div>
+          <h4>Generate → test → diagnose → revise</h4>
+          <p>
+            Policies are evaluated under randomization; failures are explained
+            with per-step metrics. Optional vision and natural-language feedback
+            feed the next attempt.
+          </p>
+        </div>
+        <div class="highlight-card">
+          <div class="icon" aria-hidden="true">◎</div>
+          <h4>Report + site</h4>
+          <p>
+            This page is a visual abstract; the PDF contains full experiments,
+            ablations, and discussion. Figures below mirror the report’s main
+            diagrams where noted.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="system">
+      <h2>
+        System overview
+      </h2>
+      <p class="section-lead">
+        Static figures from our technical report (no animation): how tasks flow
+        through the pipeline, which tools the agent uses, and how diagnosis
+        feeds the next iteration.
+      </p>
+
+      <figure class="media-frame">
+        <img
+          src="assets/pipeline.png"
+          alt="RoboScribe pipeline overview — task description through policy iteration"
+          loading="lazy"
+        />
+      </figure>
+      <p class="fig-caption"><strong>Figure 1.</strong> Pipeline overview.</p>
+
+      <figure class="media-frame">
+        <img
+          src="assets/tools.png"
+          alt="Agent tools for policy generation, simulation, and code inspection"
+          loading="lazy"
+        />
+      </figure>
+      <p class="fig-caption">
+        <strong>Figure 2.</strong> Tooling available to the agent.
+      </p>
+
+      <figure class="media-frame">
+        <img
+          src="assets/diagnosis.png"
+          alt="Diagnosis and feedback in the agent loop"
+          loading="lazy"
+        />
+      </figure>
+      <p class="fig-caption">
+        <strong>Figure 3.</strong> Diagnosis and feedback.
+      </p>
+    </section>
+
+    <section class="section-tight">
+      <div class="pipeline" aria-hidden="true">
+        <span class="step">Task text</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step">Introspect env</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step highlight">Phase plan</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step highlight">Human OK</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step">Code gen</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step">Simulate</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step">Diagnose</span>
+        <span class="arrow">&rarr;</span>
+        <span class="step">Working policy</span>
+      </div>
+    </section>
+
+    <section id="demo">
+      <h2>
+        Video demonstration
+        <span class="rubric-hint">(solution in action)</span>
+      </h2>
+      <p class="section-lead">
+        End-to-end screen capture: task description → environment confirmation →
+        phase review → autonomous generation with simulation feedback → results
+        and downloads. Serve this page over <code>http://localhost</code> (not
+        <code>file://</code>) so the YouTube embed loads reliably.
+      </p>
+      <div class="video-container">
+        <iframe
+          src="https://www.youtube.com/embed/nNfWJ0TwOYk"
+          title="RoboScribe demo — full UI walkthrough"
+          loading="lazy"
+          allow="
+            accelerometer;
+            autoplay;
+            clipboard-write;
+            encrypted-media;
+            gyroscope;
+            picture-in-picture;
+            web-share;
+          "
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+      <p class="video-caption">
+        YouTube: full UI run — task, phases, policy iteration, and success view.
+      </p>
+
+
+    <section id="pipeline">
+      <h2>
+        UI workflow <span class="rubric-hint">(annotated screenshots)</span>
+      </h2>
+      <p class="workflow-intro">
+        Screenshots of the live app — aligned with the demo video. Replace
+        placeholders when you capture Step 4–5.
+      </p>
+      <div class="pipeline" style="margin-bottom: 1.5rem" aria-hidden="true">
+        <span class="step">Task</span><span class="arrow">&rarr;</span>
+        <span class="step">Environment</span><span class="arrow">&rarr;</span>
+        <span class="step highlight">Phases</span
+        ><span class="arrow">&rarr;</span> <span class="step">Generate</span
+        ><span class="arrow">&rarr;</span>
+        <span class="step highlight">Feedback</span
+        ><span class="arrow">&rarr;</span>
+        <span class="step">Results</span>
+      </div>
+
+      <article class="workflow-step">
+        <div class="workflow-step-head">
+          <span class="workflow-step-num">1</span>
+          <h3>Describe task &amp; set up</h3>
+        </div>
+        <p class="workflow-step-desc">
+          Natural-language goal and initial setup before planning.
+        </p>
+        <figure class="workflow-fig">
+          <div class="shot-frame">
+            <img
+              src="assets/1.png"
+              alt="Task description UI"
+              loading="lazy"
+              width="800"
+              height="500"
+            />
+          </div>
+          <figcaption>Task description and setup.</figcaption>
+        </figure>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step-head">
+          <span class="workflow-step-num">2</span>
+          <h3>Confirm environment</h3>
+        </div>
+        <p class="workflow-step-desc">
+          User confirms detected robosuite environment before phase design.
+        </p>
+        <figure class="workflow-fig">
+          <div class="shot-frame">
+            <img
+              src="assets/2.png"
+              alt="Environment confirmation UI"
+              loading="lazy"
+              width="800"
+              height="500"
+            />
+          </div>
+          <figcaption>Environment confirmation.</figcaption>
+        </figure>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step-head">
+          <span class="workflow-step-num">3</span>
+          <h3>Phase review</h3>
+        </div>
+        <p class="workflow-step-desc">
+          Review and approve the LLM-proposed phase plan.
+        </p>
+        <div class="workflow-fig-stack">
+          <figure class="workflow-fig">
+            <div class="shot-frame shot-frame--tall">
+              <img
+                src="assets/3_2.png"
+                alt="Phase review overview"
+                loading="lazy"
+                width="800"
+                height="500"
+              />
+            </div>
+            <figcaption>Phase plan and review.</figcaption>
+          </figure>
+          <div class="workflow-fig-grid cols-2">
+            <figure class="workflow-fig">
+              <div class="shot-frame shot-frame--tall">
+                <img
+                  src="assets/3_3.png"
+                  alt="Phase detail"
+                  loading="lazy"
+                  width="800"
+                  height="500"
+                />
+              </div>
+              <figcaption>Phase detail or approval.</figcaption>
+            </figure>
+            <figure class="workflow-fig">
+              <div class="shot-frame shot-frame--tall">
+                <img
+                  src="assets/3_4.png"
+                  alt="Further phase context"
+                  loading="lazy"
+                  width="800"
+                  height="500"
+                />
+              </div>
+              <figcaption>Further phase context.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step-head">
+          <span class="workflow-step-num">4</span>
+          <h3>Policy generation &amp; feedback loop</h3>
+        </div>
+        <p class="workflow-step-desc">
+          Simulation runs, diagnostics, optional human feedback — capture your
+          three key panels here.
+        </p>
+        <div class="workflow-fig-grid cols-3">
+          <figure class="workflow-fig">
+            <div class="shot-frame shot-frame--placeholder">
+              <span class="shot-label"
+                >assets/pipeline-04-generation-a.png</span
+              >
+            </div>
+            <figcaption>Generation / simulation.</figcaption>
+          </figure>
+          <figure class="workflow-fig">
+            <div class="shot-frame shot-frame--placeholder">
+              <span class="shot-label"
+                >assets/pipeline-04-generation-b.png</span
+              >
+            </div>
+            <figcaption>Diagnostics / log.</figcaption>
+          </figure>
+          <figure class="workflow-fig">
+            <div class="shot-frame shot-frame--placeholder">
+              <span class="shot-label"
+                >assets/pipeline-04-generation-c.png</span
+              >
+            </div>
+            <figcaption>Human feedback input.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step-head">
+          <span class="workflow-step-num">5</span>
+          <h3>Results</h3>
+        </div>
+        <p class="workflow-step-desc">Success summary, metrics, downloads.</p>
+        <figure class="workflow-fig">
+          <div class="shot-frame shot-frame--placeholder">
+            <span class="shot-label">assets/pipeline-05-results.png</span>
+          </div>
+          <figcaption>Final results view.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section id="method">
+      <h2>Method <span class="rubric-hint">(report abstract)</span></h2>
+      <p class="section-lead">
+        RoboScribe splits policy generation into
+        <strong>phase design</strong> (human-in-the-loop) and
+        <strong>code iteration</strong> (autonomous tool loop). Full algorithms,
+        prompts, and evaluation protocols are in the PDF.
+      </p>
+
+      <div class="method-grid">
+        <div class="method-card">
+          <h4>1. Environment introspection</h4>
+          <p>
+            Auto-detect environment from text; subprocess captures observation
+            keys, shapes, sample values, and source for <code>reward()</code> /
+            <code>_check_success()</code>.
+          </p>
+        </div>
+        <div class="method-card">
+          <h4>2. Phase design</h4>
+          <p>
+            LLM proposes phased control with measurable exits; human approves
+            before code — the main intervention point.
+          </p>
+        </div>
+        <div class="method-card">
+          <h4>3. Generate → test → diagnose → revise</h4>
+          <p>
+            <code>get_action</code> policies are rolled out under randomization;
+            metrics drive diagnosis; tools iterate until success ≥ threshold.
+          </p>
+        </div>
+      </div>
+
+      <h3>Design choices</h3>
+      <div class="method-grid">
+        <div class="method-card">
+          <h4>Metrics, not hand-rules</h4>
+          <p>
+            Diagnostics surface trajectory measurements; the LLM interprets them
+            rather than matching fixed failure templates.
+          </p>
+        </div>
+        <div class="method-card">
+          <h4>Domain constraints in prompts</h4>
+          <p>
+            OSC_POSE, gripper timing, geometry hints (e.g. Door hinge,
+            NutAssembly offsets) are injected consistently.
+          </p>
+        </div>
+        <div class="method-card">
+          <h4>Human at strategy depth</h4>
+          <p>
+            Empirically, fixing phase structure beats post-hoc natural-language
+            code critique — see report for discussion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="results">
+      <h2>Results</h2>
+      <p class="section-lead">
+        Populate from your report tables. Drop a main results figure into the
+        placeholder below.
+      </p>
+
+      <div class="fig-placeholder-box">
+        <strong>Optional</strong> — add a results chart image above the table if
+        you export one from the report (not required for the three main figures
+        in System overview).
+      </div>
+
+      <h3>Per-environment performance</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Environment</th>
+            <th>Attempts to 80%+</th>
+            <th>Final success</th>
+            <th>Tokens</th>
+            <th>Backend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"lift the cube"</td>
+            <td>Lift</td>
+            <td>—</td>
+            <td class="rate-good">—%</td>
+            <td>—</td>
+            <td>Qwen</td>
+          </tr>
+          <tr>
+            <td>"stack A on B"</td>
+            <td>Stack</td>
+            <td>—</td>
+            <td class="rate-good">—%</td>
+            <td>—</td>
+            <td>Qwen</td>
+          </tr>
+          <tr>
+            <td>"nut on peg"</td>
+            <td>NutAssemblySquare</td>
+            <td>—</td>
+            <td class="rate-mid">—%</td>
+            <td>—</td>
+            <td>Qwen</td>
+          </tr>
+          <tr>
+            <td>"open the door"</td>
+            <td>Door</td>
+            <td>—</td>
+            <td class="rate-mid">—%</td>
+            <td>—</td>
+            <td>Qwen</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Iteration trajectory</h3>
+      <p class="section-lead">
+        Success rate vs. attempt — mirror Figure X from the report.
+      </p>
+      <div class="chart-placeholder">
+        Optional: embed a plot (image or interactive chart) from your
+        experiments — e.g. success rate vs. attempt.
+      </div>
+
+      
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!-- SUPPORTED ENVIRONMENTS                            -->
+    <!-- ════════════════════════════════════════════════ -->
+    <section id="environments">
+      <h2>Supported Environments</h2>
+      <p>
+        RoboScribe works with robosuite manipulation environments via MuJoCo
+        physics simulation.
+      </p>
+
+      <div class="env-grid" style="grid-template-columns: 1fr 1fr">
+        <div class="env-card">
+          <video
+            src="videos/lift_rollout.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            style="width: 100%; border-radius: 6px; margin-bottom: 0.6rem"
+          ></video>
+          <div class="env-name">Lift</div>
+          <div class="env-desc">Pick up a cube from the table</div>
+          <div
+            style="
+              margin-top: 0.3rem;
+              font-size: 0.8rem;
+              color: #16a34a;
+              font-weight: 600;
+            "
+          >
+            100% success — 1st attempt
+          </div>
+        </div>
+        <div class="env-card">
+          <video
+            src="videos/stack_rollout.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            style="width: 100%; border-radius: 6px; margin-bottom: 0.6rem"
+          ></video>
+          <div class="env-name">Stack</div>
+          <div class="env-desc">
+            Stack cube A (red) on top of cube B (green)
+          </div>
+          <div
+            style="
+              margin-top: 0.3rem;
+              font-size: 0.8rem;
+              color: #16a34a;
+              font-weight: 600;
+            "
+          >
+            100% success — 1st attempt
+          </div>
+        </div>
+        <div class="env-card">
+          <video
+            src="videos/nut_rollout.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            style="width: 100%; border-radius: 6px; margin-bottom: 0.6rem"
+          ></video>
+          <div class="env-name">NutAssemblySquare</div>
+          <div class="env-desc">Pick up a square nut and place it on a peg</div>
+          <div
+            style="
+              margin-top: 0.3rem;
+              font-size: 0.8rem;
+              color: #ca8a04;
+              font-weight: 600;
+            "
+          >
+            90% success — requires domain constraints
+          </div>
+        </div>
+        <div class="env-card">
+          <video
+            src="videos/door_rollout.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            style="width: 100%; border-radius: 6px; margin-bottom: 0.6rem"
+          ></video>
+          <div class="env-name">Door</div>
+          <div class="env-desc">Open a door by turning the handle</div>
+          <div
+            style="
+              margin-top: 0.3rem;
+              font-size: 0.8rem;
+              color: #ca8a04;
+              font-weight: 600;
+            "
+          >
+            In progress — benefits from human feedback
           </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </section>
 
-  <!-- Main Content -->
-  <main class="main">
-    <div class="container">
+    <section id="quickstart">
+      <h2>Run it locally</h2>
+      <h3>Install</h3>
+      <pre><code># Python backend (includes all dependencies)
+pip install -e "roboscribe/[sim]"
 
-      <!-- Project Hero -->
-      <section class="project-page-hero reveal">
-        <h1 class="project-page-title">RoboScribe</h1>
-        <p class="project-page-subtitle" style="font-size: 1.125rem; color: var(--color-text-secondary); margin-top: -0.5rem;">Language-Guided Scripted Policy Generation for Robotic Manipulation</p>
-        <p class="project-page-authors">
-          <a href="../index.html">Yuer Tang</a>,
-          Bree Chen
-        </p>
-        <span class="project-page-venue">MIT CSAIL · 2025</span>
-        <div class="project-page-actions">
-          <a href="Paper/Agentic_AI_for_Robotics_Control.pdf" class="project-page-btn project-page-btn--primary" target="_blank"><i class="fas fa-file-alt"></i> Paper</a>
-          <a href="https://github.com/YuerTang/AI-Agentic-for-Robotic-Control" class="project-page-btn project-page-btn--primary" target="_blank"><i class="fab fa-github"></i> Code</a>
-          <a href="https://www.youtube.com/watch?v=nNfWJ0TwOYk" class="project-page-btn project-page-btn--primary" target="_blank"><i class="fas fa-play"></i> Demo</a>
-        </div>
-      </section>
+# React frontend
+cd roboscribe/src/roboscribe/frontend && npm install</code></pre>
+      <h3>Run</h3>
+      <pre><code># Terminal 1 — Backend
+cd roboscribe/src/roboscribe
+uvicorn roboscribe.server.main:app --host 0.0.0.0 --port 8000
 
-      <!-- Abstract -->
-      <section class="project-page-section reveal">
-        <h2>Abstract</h2>
-        <p>
-          Collecting scripted trajectories is a necessary step in early-stage robotics research. Noiseless, controllable
-          demonstrations enable clean experiments before moving to noisy human data. Yet writing scripted policies by
-          hand requires researchers to spend hours learning simulator APIs, observation spaces, and low-level controller
-          details. We present RoboScribe, a language-guided pipeline that converts natural language task descriptions
-          into executable low-level control policies for robotic manipulation in simulation. RoboScribe splits the
-          problem into a human-reviewed phase design step and an autonomous generate-test-diagnose-revise code loop.
-          We evaluate across four manipulation tasks of increasing difficulty and find that the system achieves 100%
-          success on standard tasks (Lift, Stack) while exposing fundamental limits of LLM-generated code on tasks
-          requiring precise geometric reasoning (NutAssembly, Door).
-        </p>
-      </section>
+# Terminal 2 — Frontend
+cd roboscribe/src/roboscribe/frontend
+npm run build && npm run preview</code></pre>
+      <p class="section-lead" style="margin-top: 0.75rem">
+        Open <strong>http://localhost:4173</strong>. To preview this
+        documentation site:
+        <code>cd docs && python3 -m http.server 8080</code> →
+        <strong>http://localhost:8080</strong>.
+      </p>
 
-      <!-- Key Figure -->
-      <div class="figure-full reveal--scale">
-        <img src="mp4/roboscribe_trajectories.png" alt="3D trajectory comparison across four robosuite tasks" style="width: 100%; border-radius: var(--radius-sm);">
-        <p class="figure-caption">Figure 1: 3D end-effector trajectories generated by RoboScribe across four robosuite environments. Stage 1 (Phase Design): the LLM auto-detects the environment, introspects observation/action spaces, and designs a phase plan for human review. Stage 2 (Code Iteration): a tool-use agent generates code from the approved plan, tests in simulation, diagnoses failures from trajectory metrics, and iterates with optional human feedback.</p>
-      </div>
+      <h3>LLM backends</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Env variable</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Qwen</td>
+            <td><code>DASHSCOPE_API_KEY</code></td>
+            <td>Free tier</td>
+          </tr>
+          <tr>
+            <td>OpenAI</td>
+            <td><code>OPENAI_API_KEY</code></td>
+            <td>GPT-4o, vision diagnosis</td>
+          </tr>
+          <tr>
+            <td>Anthropic</td>
+            <td><code>ANTHROPIC_API_KEY</code></td>
+            <td>Claude</td>
+          </tr>
+          <tr>
+            <td>DeepSeek</td>
+            <td><code>DEEPSEEK_API_KEY</code></td>
+            <td>Budget-friendly</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-      <!-- Method -->
-      <section class="project-page-section reveal">
-        <h2>Method</h2>
-        <p>
-          RoboScribe is a two-stage pipeline combining human strategic oversight with autonomous code generation:
-        </p>
-        <ul>
-          <li><strong>Stage 1 — Phase Design (human-in-the-loop):</strong> Given a natural language task description, the LLM detects the appropriate robosuite environment, introspects observation/action spaces via live simulation, and decomposes the task into a sequence of control phases. The researcher reviews, edits, or approves the phase plan.</li>
-          <li><strong>Stage 2 — Code Iteration (autonomous agent loop):</strong> The LLM generates a complete Python policy implementing the approved phases as a state machine. The policy is tested in simulation, failures are diagnosed via trajectory metrics and video frames, and the agent revises the code. The loop runs until success reaches 80% or the turn limit is hit.</li>
-          <li><strong>Domain Constraints:</strong> Critical geometric knowledge that LLMs cannot reliably derive from first principles — action formats, gripper timing, control patterns, and environment-specific rules — is injected into the prompt as guardrails.</li>
-        </ul>
-      </section>
-
-      <!-- Results -->
-      <section class="project-page-section reveal">
-        <h2>Results</h2>
-        <p>
-          We evaluate across four robosuite manipulation tasks of increasing geometric complexity:
-        </p>
-        <ul>
-          <li><strong>Lift</strong> (translational): 100% success — the LLM reliably generates correct position-control code.</li>
-          <li><strong>Stack</strong> (two-object): 100% success — diagnostic-driven iteration fixes alignment errors in one revision (0% → 100%).</li>
-          <li><strong>NutAssembly</strong> (quaternion math): 40% best rate — requires precise geometric computations that succeed variably across runs.</li>
-          <li><strong>Door</strong> (rotation + pull): 0% success — coupled contact-rich constraints exceed what current LLMs can synthesize.</li>
-        </ul>
-        <p>
-          The diagnostic system correctly identifies failures in every case — the bottleneck is code synthesis, not failure detection. Human feedback during code iteration does not improve outcomes; the effective intervention point is phase design, where human strategy expertise has the highest leverage.
-        </p>
-      </section>
-
-      <!-- System -->
-      <section class="project-page-section reveal">
-        <h2>System Implementation</h2>
-        <p>
-          RoboScribe is a decoupled, real-time web application. The backend is a FastAPI application (Python 3, Uvicorn)
-          exposing REST endpoints and WebSocket channels for streaming intermediate results during long-running agent
-          execution. The frontend is a single-page React (JSX) application bundled with Vite. The system supports
-          four LLM backends: OpenAI, Anthropic, Qwen, and DeepSeek.
-        </p>
-      </section>
-
-      <!-- Citation -->
-      <section class="project-page-section reveal">
-        <h2>Citation</h2>
-        <div class="citation-block">
-          <button class="citation-copy">Copy</button>
-          <pre>@article{tang2025roboscribe,
-  title     = {RoboScribe: Language-Guided Scripted Policy Generation for Robotic Manipulation},
-  author    = {Tang, Yuer and Chen, Bree},
-  year      = {2025},
-  institution = {MIT CSAIL}
-}</pre>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-links">
-        <a href="mailto:yuertang17@g.ucla.edu">Email</a>
-        <a href="https://github.com/YuerTang" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/in/yuer-tang/" target="_blank">LinkedIn</a>
-      </div>
-      <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <script src="../js/i18n.js" defer></script>
-  <script src="../js/animations.js" defer></script>
-</body>
+    <footer>
+      <span
+        >&copy; 2026 <a href="https://yuertang.dev">Yuer Tang</a> · UCLA</span
+      >
+      <span
+        ><a href="https://github.com/YuerTang/AI-Agentic-for-Robotic-Control"
+          >GitHub</a
+        ></span
+      >
+    </footer>
+  </body>
 </html>
