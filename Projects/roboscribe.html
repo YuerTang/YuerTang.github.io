@@ -747,27 +747,25 @@
           loading="lazy"
         />
       </figure>
-      <p class="fig-caption"><strong>Figure 1.</strong> Pipeline overview.</p>
+      <p class="fig-caption"><strong>Figure 1.</strong> Pipeline overview. Stage 1 (Phase Design): the LLM auto-detects the environment, introspects observation/action spaces, and designs a phase plan for human review. Stage 2 (Code Iteration): a tool-use agent generates code, tests in simulation, diagnoses failures, and iterates until the success threshold is met.</p>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1.5rem 0;">
-        <figure class="media-frame" style="margin: 0;">
-          <img
-            src="Images/agent_tool.png"
-            alt="Agent tools for policy generation, simulation, and code inspection"
-            loading="lazy"
-          />
-          <p class="fig-caption" style="padding: 0.5rem;"><strong>Figure 2.</strong> Tooling available to the agent.</p>
-        </figure>
+      <figure class="media-frame" style="margin: 2rem 0 0;">
+        <img
+          src="Images/agent_tool.png"
+          alt="Agent tools for policy generation, simulation, and code inspection"
+          loading="lazy"
+        />
+      </figure>
+      <p class="fig-caption"><strong>Figure 2.</strong> Tooling available to the agent. The agent generates policy code, runs simulation rollouts, inspects environment source code, and submits the final policy — all within an autonomous loop.</p>
 
-        <figure class="media-frame" style="margin: 0;">
-          <img
-            src="Images/diagnosis_feedback.png"
-            alt="Diagnosis and feedback in the agent loop"
-            loading="lazy"
-          />
-          <p class="fig-caption" style="padding: 0.5rem;"><strong>Figure 3.</strong> Diagnosis and feedback.</p>
-        </figure>
-      </div>
+      <figure class="media-frame" style="margin: 2rem 0 0;">
+        <img
+          src="Images/diagnosis_feedback.png"
+          alt="Diagnosis and feedback in the agent loop"
+          loading="lazy"
+        />
+      </figure>
+      <p class="fig-caption"><strong>Figure 3.</strong> Diagnosis information flow. Multiple sources feed into a synthesized diagnosis. When sources conflict, human feedback takes priority, followed by trajectory measurements, then automated analysis.</p>
     </section>
 
 
