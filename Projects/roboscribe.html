@@ -751,21 +751,12 @@
 
       <figure class="media-frame" style="margin: 2rem 0 0;">
         <img
-          src="Images/agent_tool.png"
-          alt="Agent tools for policy generation, simulation, and code inspection"
-          loading="lazy"
-        />
-      </figure>
-      <p class="fig-caption"><strong>Figure 2.</strong> Tooling available to the agent. The agent generates policy code, runs simulation rollouts, inspects environment source code, and submits the final policy — all within an autonomous loop.</p>
-
-      <figure class="media-frame" style="margin: 2rem 0 0;">
-        <img
           src="Images/diagnosis_feedback.png"
           alt="Diagnosis and feedback in the agent loop"
           loading="lazy"
         />
       </figure>
-      <p class="fig-caption"><strong>Figure 3.</strong> Diagnosis information flow. Multiple sources feed into a synthesized diagnosis. When sources conflict, human feedback takes priority, followed by trajectory measurements, then automated analysis.</p>
+      <p class="fig-caption"><strong>Figure 2.</strong> Diagnosis information flow. Multiple sources feed into a synthesized diagnosis. When sources conflict, human feedback takes priority, followed by trajectory measurements, then automated analysis.</p>
     </section>
 
 
@@ -894,45 +885,64 @@
         <p class="workflow-step-desc">
           The agent generates code, rolls out in MuJoCo, and iterates with diagnostic feedback.
         </p>
+        <div class="workflow-fig-grid cols-3">
+          <figure class="workflow-fig">
+            <div class="shot-frame">
+              <img src="Images/assets/4_1.png" alt="Code generation" loading="lazy" width="800" height="500" />
+            </div>
+            <figcaption>Code generation.</figcaption>
+          </figure>
+          <figure class="workflow-fig">
+            <div class="shot-frame">
+              <img src="Images/assets/4_2.png" alt="Simulation rollout" loading="lazy" width="800" height="500" />
+            </div>
+            <figcaption>Simulation rollout.</figcaption>
+          </figure>
+          <figure class="workflow-fig">
+            <div class="shot-frame">
+              <img src="Images/assets/4_3.png" alt="Diagnostics and feedback" loading="lazy" width="800" height="500" />
+            </div>
+            <figcaption>Diagnostics and feedback.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="workflow-step">
+        <div class="workflow-step-head">
+          <span class="workflow-step-num">5</span>
+          <h3>Results</h3>
+        </div>
+        <p class="workflow-step-desc">
+          Success summary, metrics, replay, and policy download.
+        </p>
         <div class="workflow-fig-grid cols-2">
           <figure class="workflow-fig">
             <div class="shot-frame">
-              <img
-                src="Images/assets/Screenshot 2026-03-20 at 22.44.18.png"
-                alt="Simulation run"
-                loading="lazy"
-                width="800"
-                height="500"
-              />
+              <img src="Images/assets/5_1.png" alt="Success summary" loading="lazy" width="800" height="500" />
             </div>
-            <figcaption>Simulation and diagnostics.</figcaption>
+            <figcaption>Success summary and metrics.</figcaption>
           </figure>
           <figure class="workflow-fig">
             <div class="shot-frame">
-              <img
-                src="Images/assets/results and feedback.png"
-                alt="Diagnostics, vision diagnosis, and human feedback"
-                loading="lazy"
-                width="800"
-                height="500"
-              />
+              <img src="Images/assets/5_2.png" alt="Replay" loading="lazy" width="800" height="500" />
             </div>
-            <figcaption>Results and feedback.</figcaption>
+            <figcaption>Replay of successful run.</figcaption>
           </figure>
         </div>
-
-        <figure class="workflow-fig" style="margin-top: 1rem;">
-          <div class="shot-frame shot-frame--tall">
-            <img
-              src="Images/assets/Success.png"
-              alt="Policy generation succeeded — success rate, replay, and downloads"
-              loading="lazy"
-              width="800"
-              height="500"
-            />
-          </div>
-          <figcaption>Success summary: final metrics, replay, and policy download.</figcaption>
-        </figure>
+        <div class="workflow-fig-grid cols-2" style="margin-top: 1rem;">
+          <figure class="workflow-fig">
+            <div class="shot-frame">
+              <img src="Images/assets/5_3.png" alt="Policy code" loading="lazy" width="800" height="500" />
+            </div>
+            <figcaption>Generated policy code.</figcaption>
+          </figure>
+          <figure class="workflow-fig">
+            <div class="shot-frame">
+              <img src="Images/assets/5_4.png" alt="Diagnosis report" loading="lazy" width="800" height="500" />
+            </div>
+            <figcaption>Diagnosis and feedback report.</figcaption>
+          </figure>
+        </div>
       </article>
     </section>
 
