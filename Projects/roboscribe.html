@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RoboScribe — A language-guided pipeline that converts natural language task descriptions into executable low-level control policies for robotic manipulation in simulation.">
+  <meta name="author" content="Yuer Tang">
+  <meta name="robots" content="index, follow">
+
+  <link rel="canonical" href="https://yuertang.dev/Projects/roboscribe.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="RoboScribe — Yuer Tang">
+  <meta property="og:description" content="Language-guided scripted policy generation for robotic manipulation.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://yuertang.dev/Projects/roboscribe.html">
+  <meta property="og:image" content="https://yuertang.dev/profile_photo/profile.jpg">
+  <meta property="og:site_name" content="Yuer Tang">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="RoboScribe — Yuer Tang">
+  <meta name="twitter:description" content="Language-guided scripted policy generation for robotic manipulation.">
+  <meta name="twitter:image" content="https://yuertang.dev/profile_photo/profile.jpg">
+
+  <title>RoboScribe — Yuer Tang</title>
+
+  <link rel="stylesheet" href="../stylesheets/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "RoboScribe: Language-Guided Scripted Policy Generation for Robotic Manipulation",
+    "url": "https://yuertang.dev/Projects/roboscribe.html",
+    "description": "A language-guided pipeline that converts natural language task descriptions into executable low-level control policies for robotic manipulation in simulation.",
+    "author": [
+      { "@type": "Person", "name": "Yuer Tang", "url": "https://yuertang.dev/" },
+      { "@type": "Person", "name": "Bree Chen" }
+    ],
+    "sourceOrganization": { "@type": "Organization", "name": "MIT CSAIL" },
+    "datePublished": "2025",
+    "about": ["Robotics", "Large Language Models", "Code Generation", "Robotic Manipulation"]
+  }
+  </script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="../index.html" class="nav-logo">Yuer Tang</a>
+      <button class="nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-links">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../blog.html" class="nav-link" data-i18n="nav.insights">Insights</a>
+        <div class="lang-switcher">
+          <button class="lang-btn" aria-label="Change language">EN</button>
+          <div class="lang-dropdown">
+            <button class="lang-option active" data-lang="en">English</button>
+            <button class="lang-option" data-lang="zh">中文</button>
+            <button class="lang-option" data-lang="es">Español</button>
+            <button class="lang-option" data-lang="fr">Français</button>
+            <button class="lang-option" data-lang="de">Deutsch</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+
+      <!-- Project Hero -->
+      <section class="project-page-hero reveal">
+        <h1 class="project-page-title">RoboScribe</h1>
+        <p class="project-page-subtitle" style="font-size: 1.125rem; color: var(--color-text-secondary); margin-top: -0.5rem;">Language-Guided Scripted Policy Generation for Robotic Manipulation</p>
+        <p class="project-page-authors">
+          <a href="../index.html">Yuer Tang</a>,
+          Bree Chen
+        </p>
+        <span class="project-page-venue">MIT CSAIL · 2025</span>
+        <div class="project-page-actions">
+          <a href="Paper/Agentic_AI_for_Robotics_Control.pdf" class="project-page-btn project-page-btn--primary" target="_blank"><i class="fas fa-file-alt"></i> Paper</a>
+          <a href="https://github.com/YuerTang/AI-Agentic-for-Robotic-Control" class="project-page-btn project-page-btn--primary" target="_blank"><i class="fab fa-github"></i> Code</a>
+          <a href="https://www.youtube.com/watch?v=nNfWJ0TwOYk" class="project-page-btn project-page-btn--primary" target="_blank"><i class="fas fa-play"></i> Demo</a>
+        </div>
+      </section>
+
+      <!-- Abstract -->
+      <section class="project-page-section reveal">
+        <h2>Abstract</h2>
+        <p>
+          Collecting scripted trajectories is a necessary step in early-stage robotics research. Noiseless, controllable
+          demonstrations enable clean experiments before moving to noisy human data. Yet writing scripted policies by
+          hand requires researchers to spend hours learning simulator APIs, observation spaces, and low-level controller
+          details. We present RoboScribe, a language-guided pipeline that converts natural language task descriptions
+          into executable low-level control policies for robotic manipulation in simulation. RoboScribe splits the
+          problem into a human-reviewed phase design step and an autonomous generate-test-diagnose-revise code loop.
+          We evaluate across four manipulation tasks of increasing difficulty and find that the system achieves 100%
+          success on standard tasks (Lift, Stack) while exposing fundamental limits of LLM-generated code on tasks
+          requiring precise geometric reasoning (NutAssembly, Door).
+        </p>
+      </section>
+
+      <!-- Key Figure -->
+      <div class="figure-full reveal--scale">
+        <img src="mp4/roboscribe_pipeline.png" alt="RoboScribe pipeline diagram" style="width: 100%; border-radius: var(--radius-sm);">
+        <p class="figure-caption">Figure 1: RoboScribe pipeline. Stage 1 (Phase Design): the LLM auto-detects the environment, introspects observation/action spaces, and designs a phase plan for human review. Stage 2 (Code Iteration): a tool-use agent generates code from the approved plan, tests in simulation, diagnoses failures from trajectory metrics, and iterates with optional human feedback until the success threshold is met.</p>
+      </div>
+
+      <!-- Method -->
+      <section class="project-page-section reveal">
+        <h2>Method</h2>
+        <p>
+          RoboScribe is a two-stage pipeline combining human strategic oversight with autonomous code generation:
+        </p>
+        <ul>
+          <li><strong>Stage 1 — Phase Design (human-in-the-loop):</strong> Given a natural language task description, the LLM detects the appropriate robosuite environment, introspects observation/action spaces via live simulation, and decomposes the task into a sequence of control phases. The researcher reviews, edits, or approves the phase plan.</li>
+          <li><strong>Stage 2 — Code Iteration (autonomous agent loop):</strong> The LLM generates a complete Python policy implementing the approved phases as a state machine. The policy is tested in simulation, failures are diagnosed via trajectory metrics and video frames, and the agent revises the code. The loop runs until success reaches 80% or the turn limit is hit.</li>
+          <li><strong>Domain Constraints:</strong> Critical geometric knowledge that LLMs cannot reliably derive from first principles — action formats, gripper timing, control patterns, and environment-specific rules — is injected into the prompt as guardrails.</li>
+        </ul>
+      </section>
+
+      <!-- Results -->
+      <section class="project-page-section reveal">
+        <h2>Results</h2>
+        <p>
+          We evaluate across four robosuite manipulation tasks of increasing geometric complexity:
+        </p>
+        <ul>
+          <li><strong>Lift</strong> (translational): 100% success — the LLM reliably generates correct position-control code.</li>
+          <li><strong>Stack</strong> (two-object): 100% success — diagnostic-driven iteration fixes alignment errors in one revision (0% → 100%).</li>
+          <li><strong>NutAssembly</strong> (quaternion math): 40% best rate — requires precise geometric computations that succeed variably across runs.</li>
+          <li><strong>Door</strong> (rotation + pull): 0% success — coupled contact-rich constraints exceed what current LLMs can synthesize.</li>
+        </ul>
+        <p>
+          The diagnostic system correctly identifies failures in every case — the bottleneck is code synthesis, not failure detection. Human feedback during code iteration does not improve outcomes; the effective intervention point is phase design, where human strategy expertise has the highest leverage.
+        </p>
+      </section>
+
+      <!-- System -->
+      <section class="project-page-section reveal">
+        <h2>System Implementation</h2>
+        <p>
+          RoboScribe is a decoupled, real-time web application. The backend is a FastAPI application (Python 3, Uvicorn)
+          exposing REST endpoints and WebSocket channels for streaming intermediate results during long-running agent
+          execution. The frontend is a single-page React (JSX) application bundled with Vite. The system supports
+          four LLM backends: OpenAI, Anthropic, Qwen, and DeepSeek.
+        </p>
+      </section>
+
+      <!-- Citation -->
+      <section class="project-page-section reveal">
+        <h2>Citation</h2>
+        <div class="citation-block">
+          <button class="citation-copy">Copy</button>
+          <pre>@article{tang2025roboscribe,
+  title     = {RoboScribe: Language-Guided Scripted Policy Generation for Robotic Manipulation},
+  author    = {Tang, Yuer and Chen, Bree},
+  year      = {2025},
+  institution = {MIT CSAIL}
+}</pre>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="mailto:yuertang17@g.ucla.edu">Email</a>
+        <a href="https://github.com/YuerTang" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/yuer-tang/" target="_blank">LinkedIn</a>
+      </div>
+      <p>&copy; 2026 Yuer Tang. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="../js/i18n.js" defer></script>
+  <script src="../js/animations.js" defer></script>
+</body>
+</html>
