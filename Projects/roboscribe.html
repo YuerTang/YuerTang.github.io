@@ -789,7 +789,7 @@ RoboScribe turns natural language into executable robot control code—automatic
 
       <figure class="media-frame">
         <img
-          src="assets/tools.png"
+          src="Images/agent_tool.png"
           alt="Agent tools for policy generation, simulation, and code inspection"
           loading="lazy"
         />
@@ -1010,65 +1010,6 @@ RoboScribe turns natural language into executable robot control code—automatic
       </article>
     </section>
 
-    <section id="method">
-      <h2>Method <span class="rubric-hint">(report abstract)</span></h2>
-      <p class="section-lead">
-        RoboScribe splits policy generation into
-        <strong>phase design</strong> (human-in-the-loop) and
-        <strong>code iteration</strong> (autonomous tool loop). Full algorithms,
-        prompts, and evaluation protocols are in the PDF.
-      </p>
-
-      <div class="method-grid">
-        <div class="method-card">
-          <h4>1. Environment introspection</h4>
-          <p>
-            Auto-detect environment from text; subprocess captures observation
-            keys, shapes, sample values, and source for <code>reward()</code> /
-            <code>_check_success()</code>.
-          </p>
-        </div>
-        <div class="method-card">
-          <h4>2. Phase design</h4>
-          <p>
-            LLM proposes phased control with measurable exits; human approves
-            before code — the main intervention point.
-          </p>
-        </div>
-        <div class="method-card">
-          <h4>3. Generate → test → diagnose → revise</h4>
-          <p>
-            <code>get_action</code> policies are rolled out under randomization;
-            metrics drive diagnosis; tools iterate until success ≥ threshold.
-          </p>
-        </div>
-      </div>
-
-      <h3>Design choices</h3>
-      <div class="method-grid">
-        <div class="method-card">
-          <h4>Metrics, not hand-rules</h4>
-          <p>
-            Diagnostics surface trajectory measurements; the LLM interprets them
-            rather than matching fixed failure templates.
-          </p>
-        </div>
-        <div class="method-card">
-          <h4>Domain constraints in prompts</h4>
-          <p>
-            OSC_POSE, gripper timing, geometry hints (e.g. Door hinge,
-            NutAssembly offsets) are injected consistently.
-          </p>
-        </div>
-        <div class="method-card">
-          <h4>Human at strategy depth</h4>
-          <p>
-            Empirically, fixing phase structure beats post-hoc natural-language
-            code critique — see report for discussion.
-          </p>
-        </div>
-      </div>
-    </section>
 
     <section id="results">
       <h2>Results</h2>
