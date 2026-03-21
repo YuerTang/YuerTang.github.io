@@ -721,7 +721,7 @@
     <section id="overview">
       <h2>Motivation</h2>
       <p class="section-lead">
-        Writing scripted policies by hand is tedious — researchers spend hours learning simulator APIs, observation spaces, and low-level controller details. That is time better spent on actual research. RoboScribe automates this: describe a task in natural language → the system designs phased strategies with human approval → an agent writes code, rolls out in MuJoCo, diagnoses failures from trajectory metrics, and iterates until policies meet a success threshold.
+        Researchers waste hours writing scripted robot policies, wrestling with simulator APIs, observation keys, and controller bugs instead of doing research. RoboScribe fixes this. Tell it what the robot should do in plain English. It builds a step-by-step plan for you to review, then writes, tests, and debugs the code automatically until the policy works.
       </p>
     </section>
 
@@ -730,7 +730,7 @@
         System overview
       </h2>
       <p class="section-lead">
-        How tasks flow through the pipeline, which tools the agent uses, and how diagnosis feeds the next iteration.
+        You describe the task. The system figures out how to do it. Here's what happens under the hood.
       </p>
 
       <figure class="media-frame" style="margin: 1.5rem 0;">
@@ -740,7 +740,7 @@
           loading="lazy"
         />
       </figure>
-      <p class="fig-caption"><strong>Figure 1.</strong> Pipeline overview. Stage 1 (Phase Design): the LLM auto-detects the environment, introspects observation/action spaces, and designs a phase plan for human review. Stage 2 (Code Iteration): a tool-use agent generates code, tests in simulation, diagnoses failures, and iterates until the success threshold is met.</p>
+      <p class="fig-caption"><strong>Figure 1.</strong> Two stages. First, the system detects your environment and proposes a plan — you review it. Then it writes the policy, runs it in simulation, reads what went wrong, and tries again.</p>
 
       <figure class="media-frame" style="margin: 2rem 0 0;">
         <img
@@ -749,17 +749,16 @@
           loading="lazy"
         />
       </figure>
-      <p class="fig-caption"><strong>Figure 2.</strong> Diagnosis information flow. Multiple sources feed into a synthesized diagnosis. When sources conflict, human feedback takes priority, followed by trajectory measurements, then automated analysis.</p>
+      <p class="fig-caption"><strong>Figure 2.</strong> When a policy fails, the system combines trajectory data, optional vision analysis, and your feedback to figure out what went wrong — then fixes it.</p>
     </section>
 
 
     <section id="demo">
       <h2>
-        Video demonstration
-        <span class="rubric-hint">(solution in action)</span>
+        Demo
       </h2>
       <p class="section-lead" style="max-width: 100%;">
-        End-to-end screen capture: task description → environment confirmation → phase review → autonomous generation with simulation feedback → results and downloads.
+        Full walkthrough from task input to working policy.
       </p>
       <div class="video-container">
         <iframe
@@ -780,18 +779,17 @@
         ></iframe>
       </div>
       <p class="video-caption">
-        YouTube: full UI run — task, phases, policy iteration, and success view.
+        Full UI run: task input, phase review, policy iteration, success.
       </p>
 
     </section>
 
     <section id="pipeline">
       <h2>
-        UI workflow <span class="rubric-hint">(annotated screenshots)</span>
+        How it works
       </h2>
       <p class="workflow-intro">
-        Screenshots of the live app — aligned with the demo video. Replace
-        placeholders when you capture Step 4–5.
+        Five steps from idea to working policy.
       </p>
       <div class="pipeline" style="margin-bottom: 1.5rem" aria-hidden="true">
         <span class="step">Task</span><span class="arrow">&rarr;</span>
@@ -810,7 +808,7 @@
           <h3>Describe task &amp; set up</h3>
         </div>
         <p class="workflow-step-desc">
-          Natural-language goal and initial setup before planning.
+          Type what you want the robot to do.
         </p>
         <figure class="workflow-fig">
           <div class="shot-frame">
@@ -832,7 +830,7 @@
           <h3>Confirm environment</h3>
         </div>
         <p class="workflow-step-desc">
-          User confirms detected robosuite environment before phase design.
+          The system picks the right simulation environment. You confirm.
         </p>
         <figure class="workflow-fig">
           <div class="shot-frame">
@@ -854,7 +852,7 @@
           <h3>Phase review</h3>
         </div>
         <p class="workflow-step-desc">
-          Review and approve the LLM-proposed phase plan.
+          See the proposed plan. Edit it or approve it.
         </p>
         <figure class="workflow-fig">
           <div class="shot-frame shot-frame--tall">
@@ -876,7 +874,7 @@
           <h3>Policy generation &amp; simulation</h3>
         </div>
         <p class="workflow-step-desc">
-          The agent generates code, rolls out in MuJoCo, and iterates with diagnostic feedback.
+          Code is generated, tested in simulation, and revised automatically.
         </p>
         <div class="workflow-fig-grid cols-3">
           <figure class="workflow-fig">
@@ -906,7 +904,7 @@
           <h3>Results</h3>
         </div>
         <p class="workflow-step-desc">
-          Success summary, metrics, replay, and policy download.
+          Download the working policy. Watch the replay.
         </p>
         <div class="workflow-fig-grid cols-2">
           <figure class="workflow-fig">
@@ -943,7 +941,7 @@
     <section id="results">
       <h2>Results</h2>
       <p class="section-lead">
-        Success rates across four robosuite tasks of increasing geometric complexity. All runs use Qwen, the Panda robot with OSC_POSE controller, and no human feedback during code iteration.
+        We tested on four robosuite tasks, from simple picks to contact-heavy manipulation. All runs used Qwen with a Panda robot and no human feedback during iteration.
       </p>
 
       <h3>Task rollouts</h3>
@@ -1011,7 +1009,7 @@
 
       <h3>Iteration trajectory — Stack (0%→100%)</h3>
       <p class="section-lead">
-        The diagnostic system identifies "eef alignment error" and the agent fixes it in one revision.
+        Stack went from 0% to 100% in one revision. The system spotted an alignment error and fixed it.
       </p>
       <table>
         <thead>
@@ -1040,10 +1038,10 @@
 
       <h3>Key findings</h3>
       <ul style="font-size: 0.92rem; color: #444; line-height: 1.7;">
-        <li>Success correlates with geometric precision required — translational tasks (Lift, Stack) succeed reliably, while tasks involving quaternions and coupled contact (NutAssembly, Door) fail.</li>
-        <li>The diagnostic system correctly identifies failures in every case — the bottleneck is code synthesis, not failure detection.</li>
-        <li>Iterative revision helps for medium tasks (Stack: 0%→100% in one revision) but does not improve hard tasks — each revision is a new sample from the same distribution, not a targeted fix.</li>
-        <li>Human feedback during code iteration does not improve outcomes. The effective intervention point is phase design, where human strategy expertise has the highest leverage.</li>
+        <li>Simple tasks (Lift, Stack) work every time. Hard tasks involving rotation and contact (NutAssembly, Door) remain challenging for LLMs.</li>
+        <li>The diagnostic system always spots what went wrong. The bottleneck is writing the fix, not finding the bug.</li>
+        <li>Iteration helps on medium tasks (Stack: 0% to 100% in one try). On hard tasks, retrying doesn't help because the LLM makes the same kind of mistake each time.</li>
+        <li>The best place for human input is the phase plan, not debugging code after the fact.</li>
       </ul>
 
       
@@ -1054,8 +1052,7 @@
     <section id="environments">
       <h2>Supported Environments</h2>
       <p>
-        RoboScribe works with robosuite manipulation environments via MuJoCo
-        physics simulation.
+        Currently supported robosuite tasks. Each card shows a real rollout from a generated policy.
       </p>
 
       <div class="env-grid" style="grid-template-columns: 1fr 1fr">
