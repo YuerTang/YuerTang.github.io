@@ -70,9 +70,12 @@
 
       /* ── Sections ─────────────────────────────────── */
       section {
-        max-width: 820px;
+        max-width: 1100px;
         margin: 0 auto;
         padding: 3rem 1.5rem;
+      }
+      section.section-wide {
+        max-width: 1300px;
       }
       section + section {
         padding-top: 1rem;
@@ -85,7 +88,7 @@
       .hero {
         text-align: center;
         padding: 5rem 1.5rem 3rem;
-        max-width: 820px;
+        max-width: 1100px;
         margin: 0 auto;
       }
       .hero .eyebrow {
@@ -102,7 +105,7 @@
       .hero .subtitle {
         font-size: 1.15rem;
         color: #555;
-        max-width: 600px;
+        max-width: 900px;
         margin: 0 auto 1.6rem;
         line-height: 1.6;
       }
@@ -582,7 +585,7 @@
 
       /* ── Footer ───────────────────────────────────── */
       footer {
-        max-width: 820px;
+        max-width: 1100px;
         margin: 0 auto;
         padding: 2rem 1.5rem 3rem;
         border-top: 1px solid #eee;
@@ -633,6 +636,9 @@
         .workflow-fig-grid.cols-2,
         .workflow-fig-grid.cols-3 {
           grid-template-columns: 1fr;
+        }
+        .section-wide div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+          grid-template-columns: 1fr !important;
         }
       }
     </style>
@@ -715,70 +721,22 @@
     </div>
 
     <section id="overview">
-      <h2>
-        Motivation
-      </h2>
+      <h2>Motivation</h2>
       <p class="section-lead">
-       <strong>Writing robot policies shouldn't take hours.</strong>
-RoboScribe turns natural language into executable robot control code—automatically generating, testing, and debugging policies in simulation so researchers can focus on ideas, not boilerplate.
+        <strong>Writing robot policies shouldn’t take hours.</strong>
+        RoboScribe turns natural language into executable robot control code — automatically generating, testing, and debugging policies in simulation so researchers can focus on ideas, not boilerplate.
       </p>
-      <div class="stat-row" aria-label="Project highlights">
-        <span class="stat-pill">MuJoCo · robosuite</span>
-        <span class="stat-pill">JSX + FastAPI backend</span>
-        <span class="stat-pill">Human-in-the-loop</span>
-        <span class="stat-pill">Multi-LLM backends</span>
-        <span class="stat-pill">Trajectory-based diagnosis</span>
-        <span class="stat-pill">Real-time interaction</span>
-      </div>
-      <div class="highlight-grid">
-        <div class="highlight-card">
-          <div class="icon" aria-hidden="true">◇</div>
-          <h4>Grounded in the simulator</h4>
-          <p>
-            Environment detection, live obs shapes/samples, and reward/source
-            introspection so the model reasons over facts—not guesses.
-          </p>
-        </div>
-        <div class="highlight-card">
-          <div class="icon" aria-hidden="true">✓</div>
-          <h4>Phase design first</h4>
-          <p>
-            Structured phases (approach, grasp, lift, …) with exit conditions
-            are reviewed by a human before any policy code is generated.
-          </p>
-        </div>
-        <div class="highlight-card">
-          <div class="icon" aria-hidden="true">↻</div>
-          <h4>Generate → test → diagnose → revise</h4>
-          <p>
-            Policies are evaluated under randomization; failures are explained
-            with per-step metrics. Optional vision and natural-language feedback
-            feed the next attempt.
-          </p>
-        </div>
-        <div class="highlight-card">
-          <div class="icon" aria-hidden="true">◎</div>
-          <h4>Report + site</h4>
-          <p>
-            This page is a visual abstract; the PDF contains full experiments,
-            ablations, and discussion. Figures below mirror the report’s main
-            diagrams where noted.
-          </p>
-        </div>
-      </div>
     </section>
 
-    <section id="system">
+    <section id="system" class="section-wide">
       <h2>
         System overview
       </h2>
       <p class="section-lead">
-        Static figures from our technical report (no animation): how tasks flow
-        through the pipeline, which tools the agent uses, and how diagnosis
-        feeds the next iteration.
+        How tasks flow through the pipeline, which tools the agent uses, and how diagnosis feeds the next iteration.
       </p>
 
-      <figure class="media-frame">
+      <figure class="media-frame" style="margin: 1.5rem 0;">
         <img
           src="Images/agent_robot_pipeline.png"
           alt="RoboScribe pipeline overview — task description through policy iteration"
@@ -787,27 +745,25 @@ RoboScribe turns natural language into executable robot control code—automatic
       </figure>
       <p class="fig-caption"><strong>Figure 1.</strong> Pipeline overview.</p>
 
-      <figure class="media-frame">
-        <img
-          src="Images/agent_tool.png"
-          alt="Agent tools for policy generation, simulation, and code inspection"
-          loading="lazy"
-        />
-      </figure>
-      <p class="fig-caption">
-        <strong>Figure 2.</strong> Tooling available to the agent.
-      </p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 1.5rem 0;">
+        <figure class="media-frame" style="margin: 0;">
+          <img
+            src="Images/agent_tool.png"
+            alt="Agent tools for policy generation, simulation, and code inspection"
+            loading="lazy"
+          />
+          <p class="fig-caption" style="padding: 0.5rem;"><strong>Figure 2.</strong> Tooling available to the agent.</p>
+        </figure>
 
-      <figure class="media-frame">
-        <img
-          src="Images/diagnosis_feedback.png"
-          alt="Diagnosis and feedback in the agent loop"
-          loading="lazy"
-        />
-      </figure>
-      <p class="fig-caption">
-        <strong>Figure 3.</strong> Diagnosis and feedback.
-      </p>
+        <figure class="media-frame" style="margin: 0;">
+          <img
+            src="Images/diagnosis_feedback.png"
+            alt="Diagnosis and feedback in the agent loop"
+            loading="lazy"
+          />
+          <p class="fig-caption" style="padding: 0.5rem;"><strong>Figure 3.</strong> Diagnosis and feedback.</p>
+        </figure>
+      </div>
     </section>
 
 
@@ -816,11 +772,8 @@ RoboScribe turns natural language into executable robot control code—automatic
         Video demonstration
         <span class="rubric-hint">(solution in action)</span>
       </h2>
-      <p class="section-lead">
-        End-to-end screen capture: task description → environment confirmation →
-        phase review → autonomous generation with simulation feedback → results
-        and downloads. Serve this page over <code>http://localhost</code> (not
-        <code>file://</code>) so the YouTube embed loads reliably.
+      <p class="section-lead" style="max-width: 100%;">
+        End-to-end screen capture: task description → environment confirmation → phase review → autonomous generation with simulation feedback → results and downloads.
       </p>
       <div class="video-container">
         <iframe
@@ -844,6 +797,7 @@ RoboScribe turns natural language into executable robot control code—automatic
         YouTube: full UI run — task, phases, policy iteration, and success view.
       </p>
 
+    </section>
 
     <section id="pipeline">
       <h2>
@@ -875,7 +829,7 @@ RoboScribe turns natural language into executable robot control code—automatic
         <figure class="workflow-fig">
           <div class="shot-frame">
             <img
-              src="assets/1.png"
+              src="Images/assets/1.png"
               alt="Task description UI"
               loading="lazy"
               width="800"
@@ -897,7 +851,7 @@ RoboScribe turns natural language into executable robot control code—automatic
         <figure class="workflow-fig">
           <div class="shot-frame">
             <img
-              src="assets/2.png"
+              src="Images/assets/2.png"
               alt="Environment confirmation UI"
               loading="lazy"
               width="800"
@@ -916,96 +870,66 @@ RoboScribe turns natural language into executable robot control code—automatic
         <p class="workflow-step-desc">
           Review and approve the LLM-proposed phase plan.
         </p>
-        <div class="workflow-fig-stack">
-          <figure class="workflow-fig">
-            <div class="shot-frame shot-frame--tall">
-              <img
-                src="assets/3_2.png"
-                alt="Phase review overview"
-                loading="lazy"
-                width="800"
-                height="500"
-              />
-            </div>
-            <figcaption>Phase plan and review.</figcaption>
-          </figure>
-          <div class="workflow-fig-grid cols-2">
-            <figure class="workflow-fig">
-              <div class="shot-frame shot-frame--tall">
-                <img
-                  src="assets/3_3.png"
-                  alt="Phase detail"
-                  loading="lazy"
-                  width="800"
-                  height="500"
-                />
-              </div>
-              <figcaption>Phase detail or approval.</figcaption>
-            </figure>
-            <figure class="workflow-fig">
-              <div class="shot-frame shot-frame--tall">
-                <img
-                  src="assets/3_4.png"
-                  alt="Further phase context"
-                  loading="lazy"
-                  width="800"
-                  height="500"
-                />
-              </div>
-              <figcaption>Further phase context.</figcaption>
-            </figure>
+        <figure class="workflow-fig">
+          <div class="shot-frame shot-frame--tall">
+            <img
+              src="Images/assets/3_4.png"
+              alt="Phase plan review"
+              loading="lazy"
+              width="800"
+              height="500"
+            />
           </div>
-        </div>
+          <figcaption>Phase plan with control logic and human approval.</figcaption>
+        </figure>
       </article>
 
       <article class="workflow-step">
         <div class="workflow-step-head">
           <span class="workflow-step-num">4</span>
-          <h3>Policy generation &amp; feedback loop</h3>
+          <h3>Policy generation &amp; simulation</h3>
         </div>
         <p class="workflow-step-desc">
-          Simulation runs, diagnostics, optional human feedback — capture your
-          three key panels here.
+          The agent generates code, rolls out in MuJoCo, and iterates with diagnostic feedback.
         </p>
-        <div class="workflow-fig-grid cols-3">
+        <div class="workflow-fig-grid cols-2">
           <figure class="workflow-fig">
-            <div class="shot-frame shot-frame--placeholder">
-              <span class="shot-label"
-                >assets/pipeline-04-generation-a.png</span
-              >
+            <div class="shot-frame">
+              <img
+                src="Images/assets/Screenshot 2026-03-20 at 22.44.18.png"
+                alt="Simulation run"
+                loading="lazy"
+                width="800"
+                height="500"
+              />
             </div>
-            <figcaption>Generation / simulation.</figcaption>
+            <figcaption>Simulation and diagnostics.</figcaption>
           </figure>
           <figure class="workflow-fig">
-            <div class="shot-frame shot-frame--placeholder">
-              <span class="shot-label"
-                >assets/pipeline-04-generation-b.png</span
-              >
+            <div class="shot-frame">
+              <img
+                src="Images/assets/results and feedback.png"
+                alt="Diagnostics, vision diagnosis, and human feedback"
+                loading="lazy"
+                width="800"
+                height="500"
+              />
             </div>
-            <figcaption>Diagnostics / log.</figcaption>
-          </figure>
-          <figure class="workflow-fig">
-            <div class="shot-frame shot-frame--placeholder">
-              <span class="shot-label"
-                >assets/pipeline-04-generation-c.png</span
-              >
-            </div>
-            <figcaption>Human feedback input.</figcaption>
+            <figcaption>Results and feedback.</figcaption>
           </figure>
         </div>
-      </article>
 
-      <article class="workflow-step">
-        <div class="workflow-step-head">
-          <span class="workflow-step-num">5</span>
-          <h3>Results</h3>
-        </div>
-        <p class="workflow-step-desc">Success summary, metrics, downloads.</p>
-        <figure class="workflow-fig">
-          <div class="shot-frame shot-frame--placeholder">
-            <span class="shot-label">assets/pipeline-05-results.png</span>
+        <figure class="workflow-fig" style="margin-top: 1rem;">
+          <div class="shot-frame shot-frame--tall">
+            <img
+              src="Images/assets/Success.png"
+              alt="Policy generation succeeded — success rate, replay, and downloads"
+              loading="lazy"
+              width="800"
+              height="500"
+            />
           </div>
-          <figcaption>Final results view.</figcaption>
+          <figcaption>Success summary: final metrics, replay, and policy download.</figcaption>
         </figure>
       </article>
     </section>
@@ -1014,14 +938,27 @@ RoboScribe turns natural language into executable robot control code—automatic
     <section id="results">
       <h2>Results</h2>
       <p class="section-lead">
-        Populate from your report tables. Drop a main results figure into the
-        placeholder below.
+        Success rates across four robosuite tasks of increasing geometric complexity. All runs use Qwen, the Panda robot with OSC_POSE controller, and no human feedback during code iteration.
       </p>
 
-      <div class="fig-placeholder-box">
-        <strong>Optional</strong> — add a results chart image above the table if
-        you export one from the report (not required for the three main figures
-        in System overview).
+      <h3>Task rollouts</h3>
+      <div class="gif-strip">
+        <figure>
+          <img src="mp4/videos/lift_trajectory.gif" alt="Lift trajectory">
+          <figcaption>Lift (100%)</figcaption>
+        </figure>
+        <figure>
+          <img src="mp4/videos/stack_trajectory.gif" alt="Stack trajectory">
+          <figcaption>Stack (100%)</figcaption>
+        </figure>
+        <figure>
+          <img src="mp4/videos/nutassemblysquare_trajectory.gif" alt="NutAssembly trajectory">
+          <figcaption>NutAssembly (90%)</figcaption>
+        </figure>
+        <figure>
+          <img src="mp4/videos/door_trajectory.gif" alt="Door trajectory">
+          <figcaption>Door (in progress)</figcaption>
+        </figure>
       </div>
 
       <h3>Per-environment performance</h3>
@@ -1029,57 +966,80 @@ RoboScribe turns natural language into executable robot control code—automatic
         <thead>
           <tr>
             <th>Task</th>
-            <th>Environment</th>
-            <th>Attempts to 80%+</th>
-            <th>Final success</th>
-            <th>Tokens</th>
-            <th>Backend</th>
+            <th>Geometric Precision</th>
+            <th>First Attempt</th>
+            <th>Iteration Helps?</th>
+            <th>Best Rate</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>"lift the cube"</td>
             <td>Lift</td>
-            <td>—</td>
-            <td class="rate-good">—%</td>
-            <td>—</td>
-            <td>Qwen</td>
+            <td>Low (XYZ translation)</td>
+            <td>100%</td>
+            <td>N/A (succeeds immediately)</td>
+            <td class="rate-good">100%</td>
           </tr>
           <tr>
-            <td>"stack A on B"</td>
             <td>Stack</td>
-            <td>—</td>
-            <td class="rate-good">—%</td>
-            <td>—</td>
-            <td>Qwen</td>
+            <td>Medium (two-object)</td>
+            <td>0–100%</td>
+            <td>Yes (0%→100%)</td>
+            <td class="rate-good">100%</td>
           </tr>
           <tr>
-            <td>"nut on peg"</td>
-            <td>NutAssemblySquare</td>
-            <td>—</td>
-            <td class="rate-mid">—%</td>
-            <td>—</td>
-            <td>Qwen</td>
+            <td>NutAssembly</td>
+            <td>High (quaternion math)</td>
+            <td>0–60% (variable)</td>
+            <td>No (regresses)</td>
+            <td class="rate-mid">40%</td>
           </tr>
           <tr>
-            <td>"open the door"</td>
             <td>Door</td>
-            <td>—</td>
-            <td class="rate-mid">—%</td>
-            <td>—</td>
-            <td>Qwen</td>
+            <td>High (rotation + pull)</td>
+            <td>0%</td>
+            <td>No (stuck)</td>
+            <td class="rate-low">0%</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Iteration trajectory</h3>
+      <h3>Iteration trajectory — Stack (0%→100%)</h3>
       <p class="section-lead">
-        Success rate vs. attempt — mirror Figure X from the report.
+        The diagnostic system identifies "eef alignment error" and the agent fixes it in one revision.
       </p>
-      <div class="chart-placeholder">
-        Optional: embed a plot (image or interactive chart) from your
-        experiments — e.g. success rate vs. attempt.
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Attempt</th>
+            <th>Success</th>
+            <th>Diagnosis</th>
+            <th>Agent Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td class="rate-low">0% (0/10)</td>
+            <td>"eef not aligning with cube positions"</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td class="rate-good">100% (10/10)</td>
+            <td>— (success)</td>
+            <td>Fixed approach alignment logic</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Key findings</h3>
+      <ul style="font-size: 0.92rem; color: #444; line-height: 1.7;">
+        <li>Success correlates with geometric precision required — translational tasks (Lift, Stack) succeed reliably, while tasks involving quaternions and coupled contact (NutAssembly, Door) fail.</li>
+        <li>The diagnostic system correctly identifies failures in every case — the bottleneck is code synthesis, not failure detection.</li>
+        <li>Iterative revision helps for medium tasks (Stack: 0%→100% in one revision) but does not improve hard tasks — each revision is a new sample from the same distribution, not a targeted fix.</li>
+        <li>Human feedback during code iteration does not improve outcomes. The effective intervention point is phase design, where human strategy expertise has the highest leverage.</li>
+      </ul>
 
       
 
@@ -1096,7 +1056,7 @@ RoboScribe turns natural language into executable robot control code—automatic
       <div class="env-grid" style="grid-template-columns: 1fr 1fr">
         <div class="env-card">
           <video
-            src="videos/lift_rollout.mp4"
+            src="mp4/videos/lift_rollout.mp4"
             autoplay
             loop
             muted
@@ -1118,7 +1078,7 @@ RoboScribe turns natural language into executable robot control code—automatic
         </div>
         <div class="env-card">
           <video
-            src="videos/stack_rollout.mp4"
+            src="mp4/videos/stack_rollout.mp4"
             autoplay
             loop
             muted
@@ -1142,7 +1102,7 @@ RoboScribe turns natural language into executable robot control code—automatic
         </div>
         <div class="env-card">
           <video
-            src="videos/nut_rollout.mp4"
+            src="mp4/videos/nut_rollout.mp4"
             autoplay
             loop
             muted
@@ -1164,7 +1124,7 @@ RoboScribe turns natural language into executable robot control code—automatic
         </div>
         <div class="env-card">
           <video
-            src="videos/door_rollout.mp4"
+            src="mp4/videos/door_rollout.mp4"
             autoplay
             loop
             muted
